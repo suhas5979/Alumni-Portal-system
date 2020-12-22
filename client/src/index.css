@@ -1,0 +1,417 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital@1&family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+/*
+font-family: 'Lobster Two', cursive;
+font-family: 'Poppins', sans-serif;
+font-family: 'Playfair Display', serif;
+font-family: 'Rubik', sans-serif;
+*/
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-primary: #0288D1;
+  --nav-size: 100px;
+  --color-secondary: #0097A7;
+}
+
+body {
+  font-family: 'Playfair Display', serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Home */
+
+.scroll {
+  margin: 2px 0;
+}
+
+.home-content {
+  display: grid;
+  grid-template-areas: "notices notices . . login";
+}
+
+.nav {
+  height: var(--nav-size);
+  background: var(--color-primary);
+  display: flex;
+  font-family: 'Rubik', sans-serif;
+}
+
+.login-container {
+  grid-area: login;
+  height: 70vh;
+  border-left: 2px solid #dddddd;
+}
+
+.login-container ul {
+  list-style: none;
+}
+
+.login-container ul li {
+  padding: 1rem;
+}
+
+.login-container ul li:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.notice-container {
+  grid-area: notices;
+  height: 40vh;
+}
+
+.notices-container {
+  height: 40vh;
+}
+
+.nav-logo {
+  height: 90%;
+}
+
+.moto {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 5px;
+  font-weight: 800;
+}
+
+.title {
+  font-family: 'Lobster Two', cursive;
+  color: #FFFFFF;
+  font-size: 3rem;
+  padding: 5px 15px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.notice-li {
+  list-style: none;
+  margin: 1rem;
+}
+
+.landing-alumni h1 {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.alumni-gr {
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.alumni-gr img {
+  padding: 10px 30px;
+  height: 100px;
+  transition: ease-in-out 250ms;
+}
+
+.alumni-gr img:hover {
+  transform: scale(1.1);
+}
+
+.alumni-list {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+}
+
+.img-alumni-gr-1 {
+  border-bottom: 2px solid orangered;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img-alumni-gr-2 {
+  border-bottom: 2px solid blue;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img-alumni-gr-3 {
+  border-bottom: 2px solid orangered;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img-alumni-list-1 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img-alumni-list-2 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.img-alumni-list-3 {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+/* student registration */
+
+.reg-container {
+  background-image: linear-gradient(#039BE5, #00ACC1);
+  height: 100vh;
+  display: grid;
+  align-items: center;
+  grid-template-areas: ".. form ..";
+}
+
+.reg-container .reg-form {
+  border-radius: 1rem;
+  padding: 1rem;
+  grid-area: form;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reg-form .input-container {
+  width: 80%;
+  margin: 1rem 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .alumni-gr {
+    flex-direction: column;
+    align-items: center;
+  }
+  .alumni-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  .home-content {
+    grid-template-areas: "login" "notices";
+  }
+  .moto {
+    font-size: .7rem;
+  }
+  .title {
+    font-size: 2rem;
+  }
+}
+
+/* alumni dashboard */
+
+.alumni-dashboard-container {}
+
+/* student dashboard */
+
+.student-dashboard-container {}
+
+.student-dash-nav {
+  height: 60px;
+  background: var(--color-secondary);
+}
+
+.student-dash-nav ul {
+  display: flex;
+  align-items: center;
+  float: right;
+  list-style: none;
+}
+
+.student-dash-nav ul li {
+  padding: 5px;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  color: #FFFFFF;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.student-dash-nav ul li:hover {
+  display: flex;
+  background: #FFFFFF;
+  color: var(--color-primary);
+}
+
+.schollarship-page {
+  display: grid;
+  grid-template-areas: "schlp-nav schlp-list schlp-list schlp-list schlp-list";
+}
+
+.schollarship-list {
+  grid-area: schlp-list;
+}
+
+.schollarship-list ul {
+  list-style: none;
+}
+
+.schollarship-list ul li {
+  padding: 10px;
+  display: flex;
+  border-bottom: 1px solid #dddddd;
+}
+
+.schollarship-nav {
+  grid-area: schlp-nav;
+  border-right: 1px solid #dddddd;
+  height: 90vh;
+}
+
+.schollarship-nav ul {
+  list-style: none;
+}
+
+.schollarship-nav ul li {
+  padding: 10px;
+}
+
+.schollarship-nav ul li:hover {
+  background: var(--color-secondary);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.schlp-info {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.schlp-profile {
+  grid-area: schlp-list;
+}
+
+.profile-form {
+  margin: 10px;
+  width: 70%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dddddd;
+}
+
+.profile-form select {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.input-schlp {
+  margin: 5px 0;
+}
+
+.select-merge {
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+}
+
+.button-separator {
+  display: flex;
+  justify-content: space-around;
+}
+
+.applied-schollarship {
+  grid-area: schlp-list;
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+.applied-schollarship ul {
+  list-style: none;
+}
+
+.applied-schollarship ul li {
+  padding: 5px;
+}
+
+.applied-schollarship ul li .schlp-info span {
+  
+}
+
+.applied-schollarship ul li .schlp-item {
+  display: flex;
+  justify-content: space-between;
+}
+/* alumni dashboard */
+.alumni-dash-schollarships{
+  display:grid;
+  grid-template-areas: "side-nav schollarship schollarship schollarship schollarship schollarship";
+}
+.alumni-dash-nav{
+  background: var(--color-secondary);
+  height: 50px;
+}
+.alumni-dash-nav ul{
+  display: flex;
+  float: right;
+  list-style: none;
+}
+.alumni-dash-nav ul li{
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+  border: 1px solid #FFFFFF;
+}
+.alumni-dash-nav ul li:hover{
+  
+}
+.alumni-dash-side-nav{
+  grid-area:side-nav;
+  border-right: 1px solid #dddddd;
+  height: 100vh;
+
+}
+.alumni-dash-side-nav ul{
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+.alumni-dash-side-nav ul li{
+  padding: 5px;
+}
+.alumni-dash-side-nav ul li:hover{
+  background: var(--color-secondary);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+.list-schollarship{
+  grid-area:schollarship;
+}
+.list-schollarship ul li{
+}
+.schlp-item{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+ul{
+  list-style: none;
+}
+/* feed back */
+.student-feedback{
+  width: 50vw;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  margin: 20px auto;
+}
+.feedback-btn{
+  display: flex;
+  padding: 5px;
+  justify-content: space-around;
+}
+@media only screen and (max-width: 600px) {
+  .movies-wrapper {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: "nav nav""movies movies""pg-switcher pg-switcher""post-wrapper post-wrapper";
+  }
+}
