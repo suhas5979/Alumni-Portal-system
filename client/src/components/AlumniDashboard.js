@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@material-ui/core'
+import { Button } from '@material-ui/core';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+
 const AlumniDashboard = () => {
 
     const [schollarships, setSchollarships] = useState(null)
@@ -53,7 +56,14 @@ const AlumniDashboard = () => {
                                         <div className="schlp-item">
                                             <h4>{schollarship.name}</h4>
                                             <h5>{schollarship.schollarship_name}</h5>
-                                            <Button variant="contained" color="primary" >View</Button>
+                                            <div>
+
+                                                <Button variant="outlined" color="primary" >Student Info</Button>
+                                                <Popup trigger={
+                                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >View</Button>} modal >
+                                                    <SchollarshipForm schollarship={schollarship} />
+                                                </Popup>
+                                            </div>
                                         </div>
                                     </li>)}
                         </ul>
@@ -87,4 +97,24 @@ const AlumniDashboard = () => {
     )
 }
 
+const SchollarshipForm =({schollarship})=>{
+    function dateFormatter(date){
+        const newDate = new Date(date)
+        return `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`
+    }
+    return(
+        <div className="schollarship-form">
+            <div className="schollarship-info-item">
+            <span>Name</span><span >{schollarship.name}</span></div>
+            <div className="schollarship-info-item">
+            <span>Email</span><span >{schollarship.email}</span></div>
+            <div className="schollarship-info-item">
+            <span>Schollarship Name</span><span >{schollarship.schollarship_name}</span></div>
+            <div className="schollarship-info-item">
+            <span>Date of Application</span><span >{dateFormatter(schollarship.date)}</span></div>
+            <div className="schollarship-info-item-btn">
+            <Button color="primary" variant="contained" style={{background:"#43A047"}}>Approved</Button> <Button color="primary" variant="contained" style={{background:"#f44336"}}>Reject</Button></div>
+        </div>
+    )
+}
 export default AlumniDashboard

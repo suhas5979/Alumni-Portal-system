@@ -333,82 +333,129 @@ a {
   padding: 5px;
 }
 
-.applied-schollarship ul li .schlp-info span {
-  
-}
+.applied-schollarship ul li .schlp-info span {}
 
 .applied-schollarship ul li .schlp-item {
   display: flex;
   justify-content: space-between;
 }
+
 /* alumni dashboard */
-.alumni-dash-schollarships{
-  display:grid;
+
+.alumni-dash-schollarships {
+  display: grid;
   grid-template-areas: "side-nav schollarship schollarship schollarship schollarship schollarship";
 }
-.alumni-dash-nav{
+
+.alumni-dash-nav {
   background: var(--color-secondary);
   height: 50px;
 }
-.alumni-dash-nav ul{
+
+.alumni-dash-nav ul {
   display: flex;
   float: right;
   list-style: none;
 }
-.alumni-dash-nav ul li{
+
+.alumni-dash-nav ul li {
   padding: 5px;
   border-radius: 5px;
   margin: 5px;
   border: 1px solid #FFFFFF;
 }
-.alumni-dash-nav ul li:hover{
-  
-}
-.alumni-dash-side-nav{
-  grid-area:side-nav;
+
+.alumni-dash-nav ul li:hover {}
+
+.alumni-dash-side-nav {
+  grid-area: side-nav;
   border-right: 1px solid #dddddd;
   height: 100vh;
-
 }
-.alumni-dash-side-nav ul{
+
+.alumni-dash-side-nav ul {
   list-style: none;
   display: flex;
   flex-direction: column;
 }
-.alumni-dash-side-nav ul li{
+
+.alumni-dash-side-nav ul li {
   padding: 5px;
 }
-.alumni-dash-side-nav ul li:hover{
+
+.alumni-dash-side-nav ul li:hover {
   background: var(--color-secondary);
   color: #FFFFFF;
   cursor: pointer;
 }
-.list-schollarship{
-  grid-area:schollarship;
+
+.list-schollarship {
+  grid-area: schollarship;
 }
-.list-schollarship ul li{
-}
-.schlp-item{
+
+.list-schollarship ul li {}
+
+.schlp-item {
   display: flex;
   justify-content: space-between;
   padding: 5px;
 }
-ul{
+
+.schollarship-form {
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.schollarship-form .schollarship-info-item {
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.schollarship-form .schollarship-info-item>span {
+  flex: 1;
+}
+
+.schollarship-form .schollarship-info-item-btn {
+  display: flex;
+  justify-content: space-around;
+}
+
+.criteria-popup {
+  font-family: 'Poppins', sans-serif;
+  padding: 10px;
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.criteria-popup>div {
+  margin: 10px;
+  border-bottom: 1px solid #dddddd;
+}
+.criteria-popup h3{
+  border-bottom: 1px solid #dddddd;
+}
+
+ul {
   list-style: none;
 }
+
 /* feed back */
-.student-feedback{
+
+.student-feedback {
   width: 50vw;
   padding: 5px;
   border: 1px solid #dddddd;
   border-radius: 5px;
   margin: 20px auto;
 }
-.feedback-btn{
+
+.feedback-btn {
   display: flex;
   padding: 5px;
   justify-content: space-around;
 }
+
 @media only screen and (max-width: 600px) {
   .movies-wrapper {
     grid-template-columns: 1fr 1fr;
