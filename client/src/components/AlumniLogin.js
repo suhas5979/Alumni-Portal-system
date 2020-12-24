@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
 import { TextField, Button } from '@material-ui/core'
 import axios from 'axios';
 
 const AlumniLogin = (props) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [cookies, setCookie] = useCookies(['token']);
     async function loginAlumni() {
         try {
             const res = await axios.post("/api/auth/signin/alumni", { email, password })

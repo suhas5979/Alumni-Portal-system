@@ -12,7 +12,7 @@ const StudentLogin = (props) => {
         console.log(res.data)
         if (res.data.token !== null && res.data.token !== undefined) {
             sessionStorage.setItem("email",email)
-            props.history.push("/student")
+            props.history.push("/student/home")
         }
         }catch(err){
             if(err){

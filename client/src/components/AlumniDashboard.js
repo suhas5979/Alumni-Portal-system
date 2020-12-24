@@ -69,15 +69,7 @@ const AlumniDashboard = () => {
                         </ul>
                     </div>)}
                 {active === "Approved Applications" && (
-                    <div className="list-schollarship">
-                        <ul>
-                            <li >
-                                <div className="schlp-item">
-                                    <h4>No applications</h4>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <ApprovedApplication />
                 )}
 
                 {active === "Rejected Applications" && (
@@ -96,24 +88,75 @@ const AlumniDashboard = () => {
         </div>
     )
 }
+const ApprovedApplication = () => {
+    const [approvedApplications, setApprovedApplications] = useState(null);
 
-const SchollarshipForm =({schollarship})=>{
-    function dateFormatter(date){
+    function decideBackground(i) {
+        if (i % 2 == 0) {
+            return '#dddddd'
+        }
+        else {
+            return '#FFFFFF'
+        }
+    }
+    async function getApprovedApplications() {
+        const res = await axios.get('/api/schollarship');
+        console.log(res.data);
+        const filtered = res.data.filter(e => e.status === "Approved")
+        setApprovedApplications(filtered)
+    }
+    useEffect(() => {
+        getApprovedApplications()
+    }, []);
+    return (
+        <div className="list-schollarship">
+            <ul>
+                {approvedApplications !== null && approvedApplications.length > 0 &&
+                    approvedApplications.map((schollarship, i) =>
+                        <li key={`${schollarship.name}${schollarship.schollarship_name}`} style={{ background: decideBackground(i) }} >
+                            <div className="schlp-item">
+                                <h4>{schollarship.name}</h4>
+                                <h5>{schollarship.schollarship_name}</h5>
+                                <div>
+                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Check Status</Button>
+                                </div>
+                            </div>
+                        </li>)}
+            </ul>
+        </div>
+    )
+}
+const SchollarshipForm = ({ schollarship }) => {
+    function dateFormatter(date) {
         const newDate = new Date(date)
         return `${newDate.getDate()}-${newDate.getMonth()}-${newDate.getFullYear()}`
     }
-    return(
+    async function approveApplication() {
+        const res = await axios.patch('api/schollarship', { id: schollarship._id, status: "Approved" });
+        console.log(res)
+    }
+    return (
         <div className="schollarship-form">
             <div className="schollarship-info-item">
-            <span>Name</span><span >{schollarship.name}</span></div>
+                <span>Name</span><span >{schollarship.name}</span></div>
             <div className="schollarship-info-item">
-            <span>Email</span><span >{schollarship.email}</span></div>
+                <span>Email</span><span >{schollarship.email}</span></div>
             <div className="schollarship-info-item">
-            <span>Schollarship Name</span><span >{schollarship.schollarship_name}</span></div>
+                <span>Schollarship Name</span><span >{schollarship.schollarship_name}</span></div>
             <div className="schollarship-info-item">
-            <span>Date of Application</span><span >{dateFormatter(schollarship.date)}</span></div>
+                <span>Address </span><span >{schollarship.address}</span></div>
+            <div className="schollarship-info-item">
+                <span>Annual Family Income</span><span >{schollarship.income}</span></div>
+            <div className="schollarship-info-item">
+                <span>Cast</span><span >{schollarship.cast}</span></div>
+            <div className="schollarship-info-item">
+                <span>Date of Application</span><span >{dateFormatter(schollarship.date)}</span></div>
+            <div className="schollarship-info-item">
+                <span>Date of Birth</span><span >{schollarship.dateOfBirth}</span></div>
+            <div className="schollarship-info-item">
+                <span>Adhaar No</span><span >{schollarship.adhaar}</span></div>
             <div className="schollarship-info-item-btn">
-            <Button color="primary" variant="contained" style={{background:"#43A047"}}>Approved</Button> <Button color="primary" variant="contained" style={{background:"#f44336"}}>Reject</Button></div>
+                <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button> <Button color="primary" variant="contained" style={{ background: "#f44336" }}>Reject</Button></div>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { TextField, Button, Checkbox } from '@material-ui/core';
 import axios from 'axios';
 
@@ -7,10 +7,8 @@ import 'reactjs-popup/dist/index.css';
 
 const Schollarship = (props) => {
     const [active, setActive] = useState("All Schollarship");
-    const [fullName, setFullName] = useState("");
-    const [address, setAddress] = useState("");
-    const [adhaar, setAdhaar] = useState("");
-    const [mobileNo, setMobileNo] = useState("");
+   
+    const [student, setStudent] = useState(null);
     const [schollarships, setSchollarships] = useState(null);
 
     const Faqs = [
@@ -44,32 +42,19 @@ const Schollarship = (props) => {
         return active === name ? '#FFFFFF' : '#000000';
     }
     const email = sessionStorage.getItem("email");
-
-    function setButtonDesabled() {
-        if (fullName === "" || address === "" | adhaar === "" || mobileNo === "") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    async function submitProfile() {
-        const res = await axios.patch('/api/student', { email, fullName, address, mobileNo, adhaar })
-    }
-    async function applySchollarshipToStudent(name) {
-        if (fullName !== "") {
-            try {
-                const res = await axios.post('/api/schollarship', { email: email, name: fullName, schollarship_name: name });
-            } catch (err) {
-                window.alert("schollarship not register")
-            }
-        } else {
-            window.alert("please update your profile first")
-        }
+    
+    useEffect(() => {
+       getStudentInfo() 
+    }, [])
+    async function getStudentInfo() {
+        const res = await axios.get(`/api/student/${email}`);
+        console.log(res.data)
+        setStudent(res.data)
 
     }
     async function getSchollarships() {
         console.log(email)
-        const res = await axios.post("/api/emailschollarship", { email: email });
+        const res = await axios.get(`/api/schollarship/${email}`);
         console.log(res.data)
         setSchollarships(res.data)
     }
@@ -96,8 +81,11 @@ const Schollarship = (props) => {
                             <SchollarshipCriteria name={"Pragati Schollarship"} />
                         </Popup>
 
+                        <Popup trigger={<Button variant="contained" color="primary">Apply Now</Button>} modal >
+                            <ScholarshipForm name={"Pragati Schollarship"} email={email} />
+                        </Popup>
 
-                        <Button variant="contained" color="primary" onClick={() => { applySchollarshipToStudent("Pragati Schollarship") }} >Apply Now</Button>
+
                     </li>
                     <li>
 
@@ -108,7 +96,10 @@ const Schollarship = (props) => {
                         <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
                             <SchollarshipCriteria name={"1000 Dreams Schollarship"} />
                         </Popup>
-                        <Button variant="contained" color="primary" onClick={() => { applySchollarshipToStudent("1000 Dreams Schollarship") }} >Apply Now</Button></li>
+                        <Popup trigger={<Button variant="contained" color="primary" >Apply Now</Button>} modal >
+                            <ScholarshipForm name={"1000 Dreams Schollarship"} email={email} />
+                        </Popup>
+                    </li>
                     <li>
                         <div className="schlp-info">
                             <h4>Leadership Developement Schollarship</h4>
@@ -117,7 +108,10 @@ const Schollarship = (props) => {
                         <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
                             <SchollarshipCriteria name={"Leadership Developement Schollarship"} />
                         </Popup>
-                        <Button variant="contained" color="primary" onClick={() => { applySchollarshipToStudent("Leadership Developement Schollarship") }} >Apply Now</Button></li>
+                        <Popup trigger={
+                            <Button variant="contained" color="primary" >Apply Now</Button>} modal >
+                            <ScholarshipForm name={"Leadership Developement Schollarship"} email={email} />
+                        </Popup></li>
                     <li>
                         <div className="schlp-info">
                             <h4>Startup Schollarship</h4>
@@ -126,46 +120,20 @@ const Schollarship = (props) => {
                         <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
                             <SchollarshipCriteria name={"Startup Schollarship"} />
                         </Popup>
-                        <Button variant="contained" color="primary" onClick={() => { applySchollarshipToStudent("Startup Schollarship") }} >Apply Now</Button></li>
+                        <Popup trigger={
+                            <Button variant="contained" color="primary">Apply Now</Button>} modal >
+                            <ScholarshipForm name={"Startup Schollarship"} email={email} />
+                        </Popup></li>
                 </ul>
             </div>)}
-            {active === "Profile" && (
+            {active === "Profile" && student !== null && (
                 <div className="schlp-profile">
-                    <div className="profile-form">
-                        <div className="input-schlp"><TextField onChange={(e) => { setFullName(e.target.value) }} fullWidth label="Full Name" /></div>
-
-                        <div className="input-schlp">
-                            <TextField value={email} disabled fullWidth label="Email" /></div>
-
-                        <div className="input-schlp">
-                            <TextField onChange={(e) => { setMobileNo(e.target.value) }} fullWidth label="Mobile No" /></div>
-                        <div className="input-schlp">
-                            <TextField onChange={(e) => { setAddress(e.target.value) }} fullWidth label="address" /></div>
-                        <div className="select-merge">
-                            <span>State  </span>
-                            <select>
-                                <option>Maharastra</option>
-                                <option>Maddhya pradesh</option>
-                                <option>Goa</option>
-                            </select>
-                            <span>Dist  </span>
-                            <select>
-                                <option>Satara</option>
-                                <option>Sangli</option>
-                                <option>Pune</option>
-                                <option>Amravati</option>
-                                <option>Aurangabad</option>
-                            </select>
-                        </div>
-                        <div className="input-schlp">
-                            <TextField onChange={(e) => { setAdhaar(e.target.value) }} fullWidth label="Adhaar No" /></div>
-                        <div className="button-separator">
-                            <Button onClick={submitProfile} disabled={setButtonDesabled()} variant="contained" color="primary">Apply Changes</Button>
-                            <Button variant="contained" color="primary">Cancel</Button>
-                        </div>
-
-                    </div>
-
+                    <div> 
+                    <span>Name :</span>
+                    <span>{student.name}</span></div>
+                    <div> 
+                    <span>Email :</span>
+                    <span>{student.name}</span></div>
 
                 </div>)}
             {active === "My Applied Schollarship" && schollarships !== null && (
@@ -225,51 +193,134 @@ const Schollarship = (props) => {
         </div>
     )
 }
+const ScholarshipForm = ({ name: scholarship, email }) => {
+    const [fullName, setFullName] = useState("");
+    const [address, setAddress] = useState("");
+    const [adhaar, setAdhaar] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [mobileNo, setMobileNo] = useState("");
+    const [income, setIncome] = useState("");
+    const [cast, setCast] = useState("Open");
+
+    
+    function validateForm() {
+        if (fullName === "" || address === "" | adhaar === "" || mobileNo === "" ||
+         dateOfBirth === "" || income === "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    async function applySchollarship(name) {
+        if (validateForm()) {
+            try {
+                const res = await axios.post('/api/schollarship', { dateOfBirth:dateOfBirth, email: email,address:address,income:income,cast:cast,contact:mobileNo, name: fullName, schollarship_name:scholarship });
+            } catch (err) {
+                window.alert("schollarship not register")
+            }
+        } else {
+            window.alert("please fill the form")
+        }
+
+    }
+    return (
+        <>
+            <h3>{scholarship}</h3>
+            <div className="scholarship-form">
+                <div className="input-margin" >
+                    <TextField onChange={(e)=>setFullName(e.target.value)} label="Full Name" fullWidth />
+                </div>
+                <div className="input-margin" >
+                    <TextField value={email} disabled label="Email" fullWidth />
+                </div>
+                <div className="input-margin" >
+                    <TextField onChange={(e)=>setAddress(e.target.value)} label="Address" fullWidth />
+                </div>
+                <div className="input-margin" >
+                    <TextField onChange={(e)=>setMobileNo(e.target.value)} label="Mobile No" fullWidth />
+                </div>
+                <div className="input-margin" >
+                    <TextField onChange={(e)=>setDateOfBirth(e.target.value)} label="Date of Birth" fullWidth />
+                </div>
+                <div className="input-margin" >
+                <span>Annual Family income</span>
+                    <select onChange={(e)=>setIncome(e.target.value)} style={{padding:"3px",outline:"none",margin:"0px 10px"}}>
+                        <option>Below 40000</option>
+                        <option>Below 1 lac</option>
+                        <option>Below 6 lac</option>
+                        <option>Above 6 lac</option>
+                        <option>Infinity</option>
+                    </select>
+                    <input type="file" />
+                </div>
+                <div className="input-margin" >
+                    <span>Cast</span>
+                    <select onChange={(e)=>setCast(e.target.value)} style={{padding:"3px",outline:"none",margin:"0px 10px"}}>
+                        <option>Open</option>
+                        <option>OBC</option>
+                        <option>NT</option>
+                        <option>SC</option>
+                        <option>ST</option>
+                    </select>
+                    <input type="file" />
+                </div>
+                <div className="input-margin" >
+                    <TextField onChange={(e)=>setAdhaar(e.target.value)} label="Adhaar Number" fullWidth />
+                </div>
+                <div style={{ display: "flex", justifyContent: "space-around", padding: "10px" }} >
+                    <Button onClick={applySchollarship} variant="contained" color="primary" style={{ background: "#43A047" }} >Apply for Scholarship</Button>
+                    <Button variant="contained" color="primary" style={{ background: "#f44336" }} >Discard</Button>
+                </div>
+            </div>
+        </>
+    )
+}
 
 const SchollarshipCriteria = ({ name }) => {
     return (
         <>
-        <div className="criteria-popup">
-            <h3>{name}</h3>
-            <div>
-                <span style={{color:"#FF5722"}}>Eligibility</span>
-                <p>Students who are above 8.25 CGPA of successful candidates in the relevant
-                stream from the respective Board of Examination in Class XII of 10+2 pattern
-                or equivalent and pursuing regular courses (not correspondence or distance
-                mode) in Colleges/Institutions recognized by All India Council of Technical
-                Education, UGC Act, 1956, Medical Council of India, Dental Council of India
-                and respective regulatory authorities and not availing benefit of any other
-                scholarship scheme including State run scholarship schemes/Fee waiver and
-                reimbursement scheme are eligible under the scheme. Students pursuing Diploma
+            <div className="criteria-popup">
+                <h3>{name}</h3>
+                <div>
+                    <span style={{ color: "#FF5722" }}>Eligibility</span>
+                    <p>Students who are above 8.25 CGPA of successful candidates in the relevant
+                    stream from the respective Board of Examination in Class XII of 10+2 pattern
+                    or equivalent and pursuing regular courses (not correspondence or distance
+                    mode) in Colleges/Institutions recognized by All India Council of Technical
+                    Education, UGC Act, 1956, Medical Council of India, Dental Council of India
+                    and respective regulatory authorities and not availing benefit of any other
+                    scholarship scheme including State run scholarship schemes/Fee waiver and
+                    reimbursement scheme are eligible under the scheme. Students pursuing Diploma
                  courses are not eligible under the scheme. </p>
-            </div>
-            <div>
-                <span style={{color:"#FF5722"}}>Reservations</span>
-                <p>Students belonging to reserved categories/weaker sections /minorities are eligible
-                on the basis of merit, subject to Central Reservation Policy and internal
-                earmarking. Reservations for the various categories are as follows : Scheduled
-                Castes (SCs) 15 % , Scheduled Tribes ( STs) 7.5 %, Other Backward
-                Classes(OBCs) 27 % and horizontally 5 % for Physically Handicapped /
-                Persons(s) with Disabilities (PwDs) in all the categories.
+                </div>
+                <div>
+                    <span style={{ color: "#FF5722" }}>Reservations</span>
+                    <p>Students belonging to reserved categories/weaker sections /minorities are eligible
+                    on the basis of merit, subject to Central Reservation Policy and internal
+                    earmarking. Reservations for the various categories are as follows : Scheduled
+                    Castes (SCs) 15 % , Scheduled Tribes ( STs) 7.5 %, Other Backward
+                    Classes(OBCs) 27 % and horizontally 5 % for Physically Handicapped /
+                    Persons(s) with Disabilities (PwDs) in all the categories.
 </p>
-            </div>
-            <div>
-                <span style={{color:"#FF5722"}}>RATE OF SCHOLARSHIPS</span>
-                <p>The rate of scholarship is Rs.10000/- per annum at Graduation level for first three
-                years of College and University courses and Rs.20000/- per annum at PostGraduation level. Students pursuing professional courses, in case, where the
-                duration of course is five (5) years/Integrated course would get Rs.20000/- per
+                </div>
+                <div>
+                    <span style={{ color: "#FF5722" }}>Rate Of Scholarship</span>
+                    <p>The rate of scholarship is Rs.10000/- per annum at Graduation level for first three
+                    years of College and University courses and Rs.20000/- per annum at PostGraduation level. Students pursuing professional courses, in case, where the
+                    duration of course is five (5) years/Integrated course would get Rs.20000/- per
                 annum in the 4th and 5th year. However, students pursuing technical courses such as B.Tech., B.Engg would get scholarship up to graduation level.</p>
+                </div>
+                <div>
+                    <span style={{ color: "#FF5722" }}>
+                        Parental Income Ceiling
+                </span>
+                    <p>The parental/family income ceiling is Rs. 1 lakh per annum for all categories
+                    under the scheme and would be applicable from the Academic Session 2020-21.
+                    Income certificate would be required for the fresh applicants only.</p>
+                </div>
             </div>
             <div>
-                <span style={{color:"#FF5722"}}>
-                    PARENTAL INCOME CEILING
-                </span>
-                <p>The parental/family income ceiling is Rs. 8 lakh per annum for all categories
-                    under the scheme and would be applicable from the Academic Session 2018-19.Income certificate would be required for the fresh applicants only.</p>
-            </div>
-        </div>
-        <div>
-        <Checkbox /> <span>Yes I read all criteria and i understand</span></div>
+                <Checkbox /> <span>Yes I read all criteria and i understand</span></div>
         </>
     )
 }

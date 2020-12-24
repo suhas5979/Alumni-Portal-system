@@ -340,6 +340,65 @@ a {
   justify-content: space-between;
 }
 
+.scholarship-form {
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.input-margin {
+  margin: 5px 0;
+}
+
+.student-home {
+  display: grid;
+  grid-template-areas: "alumni-list std-home std-home";
+}
+.student-home .student-home-content {
+  grid-area: std-home;
+  width: 100%;
+}
+.student-home > .alumni-list {
+  grid-area: alumni-list;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 85vh;
+  width: 30vw;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.student-home .alumni-list ul {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.student-home .alumni-list ul li {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.student-home .alumni-list .alumni-item img {
+  height:35px;
+  padding: 5px;
+}
+
+.student-home .alumni-list .alumni-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.student-home .alumni-list .alumni-item > div {
+  display: flex;
+  align-items: center;
+}
+
+.student-home .alumni-list .alumni-item span {
+  font-size: 1.2rem;
+}
+
 /* alumni dashboard */
 
 .alumni-dash-schollarships {
@@ -432,7 +491,8 @@ a {
   margin: 10px;
   border-bottom: 1px solid #dddddd;
 }
-.criteria-popup h3{
+
+.criteria-popup h3 {
   border-bottom: 1px solid #dddddd;
 }
 

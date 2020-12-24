@@ -9,6 +9,12 @@ const schollashipSchema = new Schema({
     email:{
         type:String,
     },
+    adhaar:String,
+    contact:String,
+    cast:String,
+    income:String,
+    address:String,
+    dateOfBirth:String,
     status:String,
     date: {
         type: Date,
