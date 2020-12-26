@@ -101,27 +101,34 @@ a {
   list-style: none;
   margin: 1rem;
 }
-.landing-alumni{
-  grid-area: alumni ;
+
+.landing-alumni {
+  grid-area: alumni;
   width: 35vw;
 }
-.landing-alumni li{
+
+.landing-alumni li {
   display: flex;
 }
-.landing-alumni .alumni-item{
+
+.landing-alumni .alumni-item {
   display: flex;
 }
-.landing-alumni > .alumni-list {
+
+.landing-alumni>.alumni-list {
   display: flex;
   flex-direction: column;
 }
+
 .landing-alumni h1 {
   text-align: center;
   font-family: 'Poppins', sans-serif;
 }
+
 .landing-alumni img {
-  height:35px;
+  height: 35px;
 }
+
 .alumni-gr {
   padding: 5px;
   margin: 5px;
@@ -200,8 +207,6 @@ a {
   width: 80%;
   margin: 1rem 0;
 }
-
-
 
 /* alumni dashboard */
 
@@ -285,9 +290,13 @@ a {
 
 .schlp-profile {
   grid-area: schlp-list;
-  
-  
+  font-family: 'Poppins', sans-serif;
 }
+
+.font {
+  font-family: 'Poppins', sans-serif;
+}
+
 .profile-form {
   margin: 10px;
   width: 70%;
@@ -351,11 +360,13 @@ a {
   display: grid;
   grid-template-areas: "alumni-list std-home std-home";
 }
+
 .student-home .student-home-content {
   grid-area: std-home;
   width: 100%;
 }
-.student-home > .alumni-list {
+
+.student-home>.alumni-list {
   grid-area: alumni-list;
   font-family: 'Poppins', sans-serif;
   display: flex;
@@ -380,7 +391,7 @@ a {
 }
 
 .student-home .alumni-list .alumni-item img {
-  height:35px;
+  height: 35px;
   padding: 5px;
 }
 
@@ -389,7 +400,7 @@ a {
   justify-content: space-between;
 }
 
-.student-home .alumni-list .alumni-item > div {
+.student-home .alumni-list .alumni-item>div {
   display: flex;
   align-items: center;
 }

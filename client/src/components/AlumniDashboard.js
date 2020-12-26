@@ -113,7 +113,7 @@ const RejectedApplication = () => {
                                 <h4>{schollarship.name}</h4>
                                 <h5>{schollarship.schollarship_name}</h5>
                                 <div>
-                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Check Status</Button>
+                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Reason For Rejection</Button>
                                 </div>
                             </div>
                         </li>)}

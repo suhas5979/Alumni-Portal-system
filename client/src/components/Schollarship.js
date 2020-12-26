@@ -9,7 +9,6 @@ const Schollarship = (props) => {
     const [active, setActive] = useState("Profile");
 
     const [student, setStudent] = useState(null);
-    const [schollarships, setSchollarships] = useState(null);
 
 
 
@@ -38,19 +37,13 @@ const Schollarship = (props) => {
         setStudent(res.data)
 
     }
-    async function getSchollarships() {
-        console.log(email)
-        const res = await axios.get(`/api/schollarship/${email}`);
-        console.log(res.data)
-        setSchollarships(res.data)
-    }
     return (
         <div className="schollarship-page">
             <div className="schollarship-nav">
                 <ul>
                     <li onClick={() => setActive("Profile")} style={{ background: decideColor("Profile"), color: decideTextColor("Profile") }}>Profile</li>
                     <li onClick={() => setActive("All Schollarship")} style={{ background: decideColor("All Schollarship"), color: decideTextColor("All Schollarship") }}>All Schollarship</li>
-                    <li onClick={() => { setActive("My Applied Schollarship"); getSchollarships() }} style={{ background: decideColor("My Applied Schollarship"), color: decideTextColor("My Applied Schollarship") }}>My applied Schollarship</li>
+                    <li onClick={() => { setActive("My Applied Schollarship") }} style={{ background: decideColor("My Applied Schollarship"), color: decideTextColor("My Applied Schollarship") }}>My applied Schollarship</li>
                     <li onClick={() => setActive("Rejected Applications")} style={{ background: decideColor("Rejected Applications"), color: decideTextColor("Rejected Apllications") }}>Rejected Applications</li>
                     <li onClick={() => setActive("FAQs")} style={{ background: decideColor("FAQs"), color: decideTextColor("FAQs") }}>FAQs</li>
                 </ul>
@@ -114,38 +107,12 @@ const Schollarship = (props) => {
             </div>)}
             {active === "Profile" && student !== null && (
                 <StudentProfile student={student} />)}
-            {active === "My Applied Schollarship" && schollarships !== null && (
-                <div className="applied-schollarship">
-                    <ul>
-                        {schollarships.length === 0 ?
-                            <li>
-                                <div className="schlp-item">
-                                    <span>No applications</span>
-                                </div>
-                            </li>
-                            : (schollarships).map(schollarship =>
-                                <li key={`${schollarship.schollarship_name}${schollarship.name}`}>
-                                    <div className="schlp-item">
-                                        <h3>{schollarship.schollarship_name}</h3>
-                                        {console.log(schollarship.status)}
-                                        <Button variant="contained" color="primary">Cancel</Button>
-                                    </div>
-                                </li>
-                            )}
-                    </ul>
-                </div>
+            {active === "My Applied Schollarship" && (
+                <MyAppliedScholarships email={email} />
             )}
 
             {active === "Rejected Applications" && Faqs !== null && (
-                <div className="applied-schollarship">
-                    <ul >
-                        <li >
-                            <div className="schlp-item">
-                                <span>No Rejected applications</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <MyRejectedScholarships email={email} />
             )}
 
             {active === "FAQs" && Faqs !== null && (
@@ -329,20 +296,126 @@ const StudentProfile = ({ student }) => {
                 </div>
                 <div>
                     <div style={{ padding: "10px" }}>
-                        <span style={{ fontSize:"2rem" }}>{student.name}</span></div>
+                        <span style={{ fontSize: "2rem" }}>{student.name}</span></div>
                     <div style={{ padding: "10px" }}>
-                        <span style={{ fontSize:"1rem",color:"#0288D1" }}>{student.email}</span></div>
+                        <span style={{ fontSize: "1rem", color: "#0288D1" }}>{student.email}</span></div>
+                    <div style={{ padding: "10px" }}>
+                        <span style={{ fontSize: "1rem" }}>{"no contact"}</span></div>
                 </div>
 
             </div>
-            <div style={{borderTop:"1px solid #dddddd"}}>
-            <div style={{ padding: "10px" }}>
-                        <span>Name :</span>
-                        <span>{student.name}</span></div>
-                    <div style={{ padding: "10px" }}>
-                        <span>Email :</span>
-                        <span>{student.email}</span></div>
+            <div style={{ borderTop: "1px solid #dddddd" }}>
+                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Address :</span>
+                    <div>
+                        <span>{"None"}</span>
+                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
+                    </div>
+                </div>
+                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Date of Birth :</span>
+                    <div>
+                        <span>{"None"}</span>
+                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
+                    </div>
+
+                </div>
+                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Gender :</span>
+                    <div>
+                        <span>{"None"}</span>
+                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    )
+}
+const AreYouSureWarning = ({ scholarship, msg }) => {
+    return (
+        <div className="font" style={{ display: "flex", flexDirection: "column" }}>
+            {msg ? null : <span style={{ padding: "10px" }}>Are you sure you want to cancel {scholarship.schollarship_name} </span>}
+            {msg ? <p>{msg}</p> : null}
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button style={{ background: "#f44336", color: "#FFFFFF" }} >Cancel</Button>
+            </div>
+
+        </div>
+    )
+}
+const MyAppliedScholarships = ({ email }) => {
+    const [scholarships, setScholarships] = useState([])
+
+    useEffect(() => {
+        getMySchollarships()
+    }, [])
+    async function getMySchollarships() {
+        console.log(email)
+        const res = await axios.get(`/api/schollarship/${email}`);
+        console.log(res.data)
+        setScholarships(res.data)
+    }
+    return (
+        <div className="applied-schollarship">
+            <ul>
+                {scholarships.length === 0 ?
+                    <li>
+                        <div className="schlp-item">
+                            <span>No applications</span>
+                        </div>
+                    </li>
+                    : (scholarships).map(scholarship =>
+                        <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                            <div className="schlp-item">
+                                <h3>{scholarship.schollarship_name}</h3>
+                                {scholarship.status === "Rejected" ? <h4 style={{ color: "#f44336" }}>Rejected</h4> : null}
+                                <Popup trigger={<Button variant="contained" color="primary">Cancel</Button>} modal >
+                                    <AreYouSureWarning scholarship={scholarship} />
+                                </Popup>
+
+                            </div>
+                        </li>
+                    )}
+            </ul>
+        </div>
+    )
+}
+const MyRejectedScholarships = ({ email }) => {
+    const [scholarships, setScholarships] = useState([])
+
+    useEffect(() => {
+        getMySchollarships()
+    }, [])
+    async function getMySchollarships() {
+        console.log(email)
+        const res = await axios.get(`/api/schollarship/${email}`);
+        console.log(res.data)
+        const filtered = res.data.filter(e => e.status === "Rejected");;
+        setScholarships(filtered)
+    }
+    return (
+        <div className="applied-schollarship">
+            <ul>
+                {scholarships.length === 0 ?
+                    <li>
+                        <div className="schlp-item">
+                            <span>No applications</span>
+                        </div>
+                    </li>
+                    : (scholarships).map(scholarship =>
+                        <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                            <div className="schlp-item">
+                                <h3>{scholarship.schollarship_name}</h3>
+                                {console.log(scholarship.status)}
+                                <Popup trigger={<Button variant="contained" color="primary">View Reason</Button>} modal >
+                                    <AreYouSureWarning scholarship={scholarship} msg={"If you've applied for scholarships before, you'll understand how lengthy some scholarships forms can be. From details of all your family members to every last thing you did in school, some applications request enough information for you to write an autobiography. Tedious as it may be, you have to make sure you provide all the info they want, and if for some reason you can't, be sure you include a short explanation why."} />
+                                </Popup>
+
+                            </div>
+                        </li>
+                    )}
+            </ul>
         </div>
     )
 }
