@@ -4,11 +4,11 @@ import { Button } from '@material-ui/core';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-const AlumniDashboard = () => {
+const AlumniDashboard = (props) => {
 
     const [schollarships, setSchollarships] = useState(null)
     const [active, setActive] = useState("Applications")
-
+    
     useEffect(() => {
         getAllStudents()
     }, [])
@@ -30,6 +30,9 @@ const AlumniDashboard = () => {
     }
     function decideTextColor(name) {
         return active === name ? '#FFFFFF' : '#000000';
+    }
+    if(sessionStorage.getItem("alumni")=== null){
+        props.history.push("/alumni_login");
     }
     return (
         <div className="alumni-dashboard-container">
@@ -73,18 +76,48 @@ const AlumniDashboard = () => {
                 )}
 
                 {active === "Rejected Applications" && (
-                    <div className="list-schollarship">
-                        <ul>
-                            <li >
-                                <div className="schlp-item">
-                                    <h4>No applications</h4>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    <RejectedApplication />
                 )}
 
             </div>
+        </div>
+    )
+}
+const RejectedApplication = () => {
+    const [rejectedApplications, setRejectedApplications] = useState(null);
+
+    function decideBackground(i) {
+        if (i % 2 == 0) {
+            return '#dddddd'
+        }
+        else {
+            return '#FFFFFF'
+        }
+    }
+    async function getRejectedApplications() {
+        const res = await axios.get('/api/schollarship');
+        console.log(res.data);
+        const filtered = res.data.filter(e => e.status === "Rejected")
+        setRejectedApplications(filtered)
+    }
+    useEffect(() => {
+        getRejectedApplications()
+    }, []);
+    return (
+        <div className="list-schollarship">
+            <ul>
+                {rejectedApplications !== null && rejectedApplications.length > 0 &&
+                    rejectedApplications.map((schollarship, i) =>
+                        <li key={`${schollarship.name}${schollarship.schollarship_name}`} style={{ background: decideBackground(i) }} >
+                            <div className="schlp-item">
+                                <h4>{schollarship.name}</h4>
+                                <h5>{schollarship.schollarship_name}</h5>
+                                <div>
+                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Check Status</Button>
+                                </div>
+                            </div>
+                        </li>)}
+            </ul>
         </div>
     )
 }
@@ -135,6 +168,10 @@ const SchollarshipForm = ({ schollarship }) => {
         const res = await axios.patch('api/schollarship', { id: schollarship._id, status: "Approved" });
         console.log(res)
     }
+    async function rejectApplication() {
+        const res = await axios.patch('api/schollarship', { id: schollarship._id, status: "Rejected" });
+        console.log(res)
+    }
     return (
         <div className="schollarship-form">
             <div className="schollarship-info-item">
@@ -156,7 +193,8 @@ const SchollarshipForm = ({ schollarship }) => {
             <div className="schollarship-info-item">
                 <span>Adhaar No</span><span >{schollarship.adhaar}</span></div>
             <div className="schollarship-info-item-btn">
-                <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button> <Button color="primary" variant="contained" style={{ background: "#f44336" }}>Reject</Button></div>
+                <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button> 
+                <Button onClick={rejectApplication} color="primary" variant="contained" style={{ background: "#f44336" }}>Reject</Button></div>
         </div>
     )
 }

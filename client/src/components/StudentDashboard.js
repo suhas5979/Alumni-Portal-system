@@ -3,10 +3,18 @@ import { Switch, Route, Link } from 'react-router-dom';
 import Feedback from './Feedback';
 import Schollarship from './Schollarship';
 import axios from 'axios';
-import { Button, IconButton } from '@material-ui/core';
+import { IconButton, TextField } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import MessageIcon from '@material-ui/icons/Message';
+import SendIcon from '@material-ui/icons/Send';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const StudentDashboard = (props) => {
+
+    if (sessionStorage.getItem("email") === null) {
+        props.history.push("/student_login");
+    }
     return (
         <div className="student-dashboard-container">
             <Switch>
@@ -69,9 +77,9 @@ const Home = () => {
                 <h4 style={{ textAlign: "center", borderBottom: "1px solid #dddddd" }}>Alumnis</h4>
                 <ul>
                     {alumnis !== null ? (alumnis.map((alumni, i) =>
-                      <AlumniCard alumni={alumni}  />
-                    )):
-                    (<li>Loading .....</li>)}
+                        <AlumniCard alumni={alumni} />
+                    )) :
+                        (<li>Loading .....</li>)}
                 </ul>
             </div>
             <div className="student-home-content">
@@ -80,7 +88,7 @@ const Home = () => {
         </div>
     )
 }
-const AlumniCard = ({alumni}) => {
+const AlumniCard = ({ alumni }) => {
     return (
         <li key={alumni.email}>
             <div className="alumni-item">
@@ -92,10 +100,51 @@ const AlumniCard = ({alumni}) => {
                     </div>
 
                 </div>
+                <Popup trigger={<IconButton style={{ color: "#03A9F4" }} ><MessageIcon /></IconButton>} modal >
+                    <SendMessage />
+                </Popup>
 
                 <IconButton style={{ color: "#03A9F4" }} ><PersonAddIcon /></IconButton>
             </div>
         </li>
+    )
+}
+
+const SendMessage = () => {
+    const [messages, setMessages] = useState([])
+    const [text, setText] = useState("")
+    var messag = ["hiiii", "suhas i am", "very good"]
+    function sendMessage() {
+        if (text !== "") {
+            setMessages([...messages, text]);
+            setText("")
+        } else {
+
+        }
+    }
+    console.log(messages);
+    return (
+        <div style={{ height: "300px", display: "flex", flexDirection: "column" }}>
+            <h3 style={{ textAlign: "center" }}> Conversation</h3>
+            <div style={{ display: "flex", flex: "1", flexDirection: "column" }} >
+                <div style={{ flex: "1" }} >
+                    <ul style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }} >
+                        {messages.map(message =>
+
+                            <span key={message} style={{margin:"5px",background:"#29B6F6",padding:"2px 6px",borderRadius:"12px",color:"#FFFFFF"}}>
+                                {message}
+                            </span>
+
+
+                        )}
+                    </ul>
+                </div>
+                <div style={{ display: "flex" }} >
+                    <TextField value={text} onChange={(e) => setText(e.target.value)} fullWidth label="message" />
+                    <IconButton onClick={sendMessage} style={{ color: "#4CAF50" }}><SendIcon /> </IconButton>
+                </div>
+            </div>
+        </div>
     )
 }
 export { StudentDashboard, Home }

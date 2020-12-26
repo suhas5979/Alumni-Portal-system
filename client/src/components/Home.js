@@ -1,9 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from '@material-ui/core';
 
 function Home() {
+    const [alumnis, setAlumnis] = useState(null);
 
+    useEffect(() => {
+        getAllAlumnis()
+    }, []);
+    async function getAllAlumnis() {
+        const res = await axios.get('/api/alumni');
+        setAlumnis(res.data);
+        console.log(res.data);
+    }
     return (
         <div className="home-container">
             <nav className="nav">
@@ -33,29 +43,37 @@ function Home() {
 
                     </ul>
                 </div>
-                <div className="notice-container">
+                <div className="landing-alumni">
+                    <div className="alumni-list">
+                        <h4 style={{ textAlign: "center", borderBottom: "1px solid #dddddd" }}>Alumnis</h4>
+                        <ul>
+                            {alumnis !== null ? (alumnis.map((alumni, i) =>
+                                <AlumniCard alumni={alumni} />
+                            )) :
+                                (<li>Loading .....</li>)}
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-                </div>
-            </div>
-            <div className="landing-alumni">
-                <h1>Discover alumni via pre curated lists</h1>
-                <div className="alumni-gr">
-                    <img className="img-alumni-gr-1" src={require('../assets/alumni1.jpg')} />
-                    <img className="img-alumni-gr-2" src={require('../assets/alumni2.jpg')} />
-                    <img className="img-alumni-gr-3" src={require('../assets/alumni3.jpg')} />
-                </div>
-                <div className="alumni-list">
-                    <img className="img-alumni-list-1" src={require('../assets/alumni4.jpg')} />
-                    <img className="img-alumni-list-2" src={require('../assets/alumni5.jpg')} />
-                    <img className="img-alumni-list-3" src={require('../assets/alumni6.jpg')} />
-                </div>
-                <div className="btn-center">
-                    
-                <Button variant="contained" color="secondary" >See All list</Button>
-                </div>
-            </div>
 
         </div>
+    )
+}
+const AlumniCard = ({ alumni }) => {
+    return (
+        <li key={alumni.email} style={{borderBottom:"1px solid #dddddd"}}>
+            <div className="alumni-item">
+                <div style={{ flex: "1",display:"flex",padding:"5px" }}>
+                    <img src={require('../assets/user.png')} />
+                    <div style={{ display: "flex", flexDirection: "column" }} >
+                        <span style={{ fontSize: "1rem", color: "#03A9F4" }}>{alumni.name}</span>
+                        <span style={{ fontSize: "0.8rem", color: "#9E9E9E" }}>{alumni.status}</span>
+                    </div>
+
+                </div>
+            </div>
+        </li>
     )
 }
 

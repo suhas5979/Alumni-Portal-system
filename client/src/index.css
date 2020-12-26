@@ -36,7 +36,7 @@ a {
 
 .home-content {
   display: grid;
-  grid-template-areas: "notices notices . . login";
+  grid-template-areas: "alumni . . login";
 }
 
 .nav {
@@ -101,12 +101,27 @@ a {
   list-style: none;
   margin: 1rem;
 }
-
+.landing-alumni{
+  grid-area: alumni ;
+  width: 35vw;
+}
+.landing-alumni li{
+  display: flex;
+}
+.landing-alumni .alumni-item{
+  display: flex;
+}
+.landing-alumni > .alumni-list {
+  display: flex;
+  flex-direction: column;
+}
 .landing-alumni h1 {
   text-align: center;
   font-family: 'Poppins', sans-serif;
 }
-
+.landing-alumni img {
+  height:35px;
+}
 .alumni-gr {
   padding: 5px;
   margin: 5px;
@@ -186,25 +201,7 @@ a {
   margin: 1rem 0;
 }
 
-@media only screen and (max-width: 800px) {
-  .alumni-gr {
-    flex-direction: column;
-    align-items: center;
-  }
-  .alumni-list {
-    flex-direction: column;
-    align-items: center;
-  }
-  .home-content {
-    grid-template-areas: "login" "notices";
-  }
-  .moto {
-    font-size: .7rem;
-  }
-  .title {
-    font-size: 2rem;
-  }
-}
+
 
 /* alumni dashboard */
 
@@ -288,8 +285,9 @@ a {
 
 .schlp-profile {
   grid-area: schlp-list;
+  
+  
 }
-
 .profile-form {
   margin: 10px;
   width: 70%;
@@ -364,6 +362,7 @@ a {
   flex-direction: column;
   justify-content: flex-start;
   height: 85vh;
+  overflow-y: scroll;
   width: 30vw;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
@@ -520,5 +519,25 @@ ul {
   .movies-wrapper {
     grid-template-columns: 1fr 1fr;
     grid-template-areas: "nav nav""movies movies""pg-switcher pg-switcher""post-wrapper post-wrapper";
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .alumni-gr {
+    flex-direction: column;
+    align-items: center;
+  }
+  .alumni-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  .home-content {
+    grid-template-areas: "login" "notices";
+  }
+  .moto {
+    font-size: .7rem;
+  }
+  .title {
+    font-size: 2rem;
   }
 }
