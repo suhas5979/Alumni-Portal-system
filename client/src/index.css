@@ -292,7 +292,13 @@ a {
   grid-area: schlp-list;
   font-family: 'Poppins', sans-serif;
 }
-
+.student-profile-nav ul li{
+  padding: 5px;
+  cursor: pointer;
+}
+.student-profile-nav ul li:hover{
+  background-color: #0288D1;
+}
 .font {
   font-family: 'Poppins', sans-serif;
 }

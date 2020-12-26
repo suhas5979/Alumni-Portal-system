@@ -30,7 +30,7 @@ router.post('/api/schollarship', async (req, res) => {
     const { email, name, schollarship_name, adhaar, contact, cast, income, address, dateOfBirth } = req.body;
     console.log(Schollarship)
     try {
-        const schollarship = await Schollarship({ adhaar: adhaar, contact: contact, cast: cast, income: income, address: address, dateOfBirth: dateOfBirth, email: email, name: name, status: "new", schollarship_name: schollarship_name }).save();
+        const schollarship = await Schollarship({ adhaar: adhaar, contact: contact, cast: cast, income: income, address: address, dateOfBirth: dateOfBirth, email: email, name: name, status: "Waiting For Approval", schollarship_name: schollarship_name }).save();
         console.log(schollarship)
 
         return res.send(schollarship);

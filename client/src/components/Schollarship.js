@@ -61,7 +61,7 @@ const Schollarship = (props) => {
                         </Popup>
 
                         <Popup trigger={<Button variant="contained" color="primary">Apply Now</Button>} modal >
-                            <ScholarshipForm name={"Pragati Schollarship"} email={email} />
+                            <ScholarshipForm student={student} name={"Pragati Schollarship"} email={email} />
                         </Popup>
 
 
@@ -76,7 +76,7 @@ const Schollarship = (props) => {
                             <SchollarshipCriteria name={"1000 Dreams Schollarship"} />
                         </Popup>
                         <Popup trigger={<Button variant="contained" color="primary" >Apply Now</Button>} modal >
-                            <ScholarshipForm name={"1000 Dreams Schollarship"} email={email} />
+                            <ScholarshipForm student={student} name={"1000 Dreams Schollarship"} email={email} />
                         </Popup>
                     </li>
                     <li>
@@ -89,7 +89,7 @@ const Schollarship = (props) => {
                         </Popup>
                         <Popup trigger={
                             <Button variant="contained" color="primary" >Apply Now</Button>} modal >
-                            <ScholarshipForm name={"Leadership Developement Schollarship"} email={email} />
+                            <ScholarshipForm student={student} name={"Leadership Developement Schollarship"} email={email} />
                         </Popup></li>
                     <li>
                         <div className="schlp-info">
@@ -101,7 +101,8 @@ const Schollarship = (props) => {
                         </Popup>
                         <Popup trigger={
                             <Button variant="contained" color="primary">Apply Now</Button>} modal >
-                            <ScholarshipForm name={"Startup Schollarship"} email={email} />
+                            {console.log(student)}
+                            <ScholarshipForm student={student} name={"Startup Schollarship"} email={email} />
                         </Popup></li>
                 </ul>
             </div>)}
@@ -141,19 +142,20 @@ const Schollarship = (props) => {
         </div>
     )
 }
-const ScholarshipForm = ({ name: scholarship, email }) => {
-    const [fullName, setFullName] = useState("");
-    const [address, setAddress] = useState("");
+const ScholarshipForm = ({ name: scholarship, email, student }) => {
+    console.log(student)
+    const [fullName, setFullName] = useState(student.fullName);
+    const [address, setAddress] = useState(student.address);
     const [adhaar, setAdhaar] = useState("");
-    const [dateOfBirth, setDateOfBirth] = useState("");
-    const [mobileNo, setMobileNo] = useState("");
-    const [income, setIncome] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState(student.dateOfBirth);
+    const [mobileNo, setMobileNo] = useState(student.mobileNo);
+    const [income, setIncome] = useState("Below 40000");
     const [cast, setCast] = useState("Open");
 
 
     function validateForm() {
         if (fullName === "" || address === "" | adhaar === "" || mobileNo === "" ||
-            dateOfBirth === "" || income === "") {
+            dateOfBirth === "") {
             return false;
         } else {
             return true;
@@ -176,19 +178,19 @@ const ScholarshipForm = ({ name: scholarship, email }) => {
             <h3>{scholarship}</h3>
             <div className="scholarship-form">
                 <div className="input-margin" >
-                    <TextField onChange={(e) => setFullName(e.target.value)} label="Full Name" fullWidth />
+                    <TextField value={fullName} onChange={(e) => setFullName(e.target.value)} label="Full Name" fullWidth />
                 </div>
                 <div className="input-margin" >
                     <TextField value={email} disabled label="Email" fullWidth />
                 </div>
                 <div className="input-margin" >
-                    <TextField onChange={(e) => setAddress(e.target.value)} label="Address" fullWidth />
+                    <TextField value={address} onChange={(e) => setAddress(e.target.value)} label="Address" fullWidth />
                 </div>
                 <div className="input-margin" >
-                    <TextField onChange={(e) => setMobileNo(e.target.value)} label="Mobile No" fullWidth />
+                    <TextField value={mobileNo} onChange={(e) => setMobileNo(e.target.value)} label="Mobile No" fullWidth />
                 </div>
                 <div className="input-margin" >
-                    <TextField onChange={(e) => setDateOfBirth(e.target.value)} label="Date of Birth" fullWidth />
+                    <TextField value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} label="Date of Birth" fullWidth />
                 </div>
                 <div className="input-margin" >
                     <span>Annual Family income</span>
@@ -281,12 +283,44 @@ const FaqInformation = ({ info }) => {
     )
 }
 const StudentProfile = ({ student }) => {
+    const [fullName, setFullName] = useState("");
+    const [address, setAddress] = useState("");
+    const [dateOfBirth, setDateOfBirth] = useState("");
+    const [mobileNo, setMobileNo] = useState("");
+    const [active, setActive] = useState("Information");
     if (student === null) {
         return (
             <div className="schlp-profile">
                 Loading........
             </div>
         )
+    }
+    function validateForm() {
+        if (fullName === "" || address === "" || mobileNo === "" ||
+            dateOfBirth === "") {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    function decideColor(name) {
+        return active === name ? '#0288D1' : '#FFFFFF';
+    }
+    function decideTextColor(name) {
+        return active === name ? '#FFFFFF' : '#000000';
+    }
+    async function editProfile() {
+        if (validateForm()) {
+            try {
+                const res = await axios.patch('/api/student', { email: student.email, fullName, address, dateOfBirth, mobileNo });
+                console.log(res.data)
+
+            } catch (err) {
+                window.alert("something went wrong")
+            }
+        } else {
+            window.alert("please enter information")
+        }
     }
     return (
         <div className="schlp-profile">
@@ -300,33 +334,61 @@ const StudentProfile = ({ student }) => {
                     <div style={{ padding: "10px" }}>
                         <span style={{ fontSize: "1rem", color: "#0288D1" }}>{student.email}</span></div>
                     <div style={{ padding: "10px" }}>
-                        <span style={{ fontSize: "1rem" }}>{"no contact"}</span></div>
+                        <span style={{ fontSize: "1rem" }}>{student.mobileNo === "" ? "No Contact" : student.mobileNo}</span></div>
                 </div>
 
             </div>
             <div style={{ borderTop: "1px solid #dddddd" }}>
-                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Address :</span>
-                    <div>
-                        <span>{"None"}</span>
-                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
-                    </div>
+                <div className="student-profile-nav" >
+                    <ul style={{ display: "flex" }}>
+                        <li onClick={() => setActive("Information")} style={{ background: decideColor("Information"), color: decideTextColor("Information") }}>Information</li>
+                        <li onClick={() => setActive("Edit Information")} style={{ background: decideColor("Edit Information"), color: decideTextColor("Edit Information") }}>Edit Information</li>
+                    </ul>
                 </div>
-                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Date of Birth :</span>
+                {active === "Information" && (
                     <div>
-                        <span>{"None"}</span>
-                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
-                    </div>
+                        <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                            <span style={{ fontSize: "1rem", color: "#0288D1" }}>Address :</span>
+                            <div>
+                                <span>{student.address}</span>
+                            </div>
+                        </div>
+                        <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                            <span style={{ fontSize: "1rem", color: "#0288D1" }}>Date of Birth :</span>
+                            <div>
+                                <span>{student.dateOfBirth}</span>
+                            </div>
 
-                </div>
-                <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
-                    <span style={{ fontSize: "1rem", color: "#0288D1" }}>Gender :</span>
-                    <div>
-                        <span>{"None"}</span>
-                        <Button style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
+                        </div>
+                        <div style={{ padding: "10px", display: "flex", flexDirection: "column" }}>
+                            <span style={{ fontSize: "1rem", color: "#0288D1" }}>Gender :</span>
+                            <div>
+                                <span>{"None"}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
+                {active === "Edit Information" && (
+                    <div style={{ padding: "5px" }}>
+                        <div className="input-margin" >
+                            <TextField onChange={(e) => setFullName(e.target.value)} label="Full Name" />
+                        </div>
+                        <div className="input-margin" >
+                            <TextField disabled value={student.email} label="Email" />
+                        </div>
+                        <div className="input-margin" >
+                            <TextField onChange={(e) => setAddress(e.target.value)} label="Address" />
+                        </div>
+                        <div className="input-margin" >
+                            <TextField onChange={(e) => setMobileNo(e.target.value)} label="Mobile No" />
+                        </div>
+                        <div className="input-margin" >
+                            <TextField onChange={(e) => setDateOfBirth(e.target.value)} label="Date of Birth" />
+                        </div>
+                        <Button onClick={editProfile} style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
+                    </div>
+                )}
+
 
             </div>
         </div>
@@ -335,10 +397,20 @@ const StudentProfile = ({ student }) => {
 const AreYouSureWarning = ({ scholarship, msg }) => {
     return (
         <div className="font" style={{ display: "flex", flexDirection: "column" }}>
-            {msg ? null : <span style={{ padding: "10px" }}>Are you sure you want to cancel {scholarship.schollarship_name} </span>}
-            {msg ? <p>{msg}</p> : null}
+            <span style={{ padding: "10px" }}>Are you sure you want to cancel {scholarship.schollarship_name} </span>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button style={{ background: "#f44336", color: "#FFFFFF" }} >Cancel</Button>
+                <Button style={{ background: "#f44336", color: "#FFFFFF" }} >Cancel Application</Button>
+            </div>
+
+        </div>
+    )
+}
+const ViewInfo = ({ msg }) => {
+    return (
+        <div className="font" style={{ display: "flex", flexDirection: "column" }}>
+            <p>{msg}</p>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button style={{ background: "#f44336", color: "#FFFFFF" }} >Close</Button>
             </div>
 
         </div>
@@ -356,6 +428,9 @@ const MyAppliedScholarships = ({ email }) => {
         console.log(res.data)
         setScholarships(res.data)
     }
+    function decideColorForStatus(text) {
+        return text === "Rejected" ? "#f44336" : "#4CAF50";
+    }
     return (
         <div className="applied-schollarship">
             <ul>
@@ -369,7 +444,7 @@ const MyAppliedScholarships = ({ email }) => {
                         <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
                                 <h3>{scholarship.schollarship_name}</h3>
-                                {scholarship.status === "Rejected" ? <h4 style={{ color: "#f44336" }}>Rejected</h4> : null}
+                                <h4 style={{ color: decideColorForStatus(scholarship.status) }}>{scholarship.status}</h4>
                                 <Popup trigger={<Button variant="contained" color="primary">Cancel</Button>} modal >
                                     <AreYouSureWarning scholarship={scholarship} />
                                 </Popup>
@@ -409,7 +484,7 @@ const MyRejectedScholarships = ({ email }) => {
                                 <h3>{scholarship.schollarship_name}</h3>
                                 {console.log(scholarship.status)}
                                 <Popup trigger={<Button variant="contained" color="primary">View Reason</Button>} modal >
-                                    <AreYouSureWarning scholarship={scholarship} msg={"If you've applied for scholarships before, you'll understand how lengthy some scholarships forms can be. From details of all your family members to every last thing you did in school, some applications request enough information for you to write an autobiography. Tedious as it may be, you have to make sure you provide all the info they want, and if for some reason you can't, be sure you include a short explanation why."} />
+                                    <ViewInfo msg={"If you've applied for scholarships before, you'll understand how lengthy some scholarships forms can be. From details of all your family members to every last thing you did in school, some applications request enough information for you to write an autobiography. Tedious as it may be, you have to make sure you provide all the info they want, and if for some reason you can't, be sure you include a short explanation why."} />
                                 </Popup>
 
                             </div>

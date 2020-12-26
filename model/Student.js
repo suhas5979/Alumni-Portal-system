@@ -30,6 +30,10 @@ const studentSchema = new Schema({
     },
     password: String,
     rollNo: String,
+    dateOfBirth:{
+        type:String,
+        default:""
+    },
     date: {
         type: Date,
         default: new Date

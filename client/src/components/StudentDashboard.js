@@ -83,7 +83,7 @@ const Home = () => {
                 </ul>
             </div>
             <div className="student-home-content">
-                Suhas
+                <h2 style={{textAlign:"center"}} > Home</h2>
             </div>
         </div>
     )
@@ -93,7 +93,7 @@ const AlumniCard = ({ alumni }) => {
         <li key={alumni.email}>
             <div className="alumni-item">
                 <div style={{ flex: "1" }}>
-                    <img src={require('../assets/user.png')} />
+                    <img src={require('../assets/avatar.png')} />
                     <div style={{ display: "flex", flexDirection: "column" }} >
                         <span style={{ fontSize: "1rem", color: "#03A9F4" }}>{alumni.name}</span>
                         <span style={{ fontSize: "0.8rem", color: "#9E9E9E" }}>{alumni.status}</span>
@@ -101,7 +101,7 @@ const AlumniCard = ({ alumni }) => {
 
                 </div>
                 <Popup trigger={<IconButton style={{ color: "#03A9F4" }} ><MessageIcon /></IconButton>} modal >
-                    <SendMessage />
+                    <SendMessage name={alumni.name} />
                 </Popup>
 
                 <IconButton style={{ color: "#03A9F4" }} ><PersonAddIcon /></IconButton>
@@ -110,10 +110,9 @@ const AlumniCard = ({ alumni }) => {
     )
 }
 
-const SendMessage = () => {
+const SendMessage = ({ name }) => {
     const [messages, setMessages] = useState([])
-    const [text, setText] = useState("")
-    var messag = ["hiiii", "suhas i am", "very good"]
+    const [text, setText] = useState("");
     function sendMessage() {
         if (text !== "") {
             setMessages([...messages, text]);
@@ -125,13 +124,13 @@ const SendMessage = () => {
     console.log(messages);
     return (
         <div style={{ height: "300px", display: "flex", flexDirection: "column" }}>
-            <h3 style={{ textAlign: "center" }}> Conversation</h3>
+            <h3 style={{ textAlign: "center", borderBottom:"1px solid #dddddd"}}>{name}</h3>
             <div style={{ display: "flex", flex: "1", flexDirection: "column" }} >
                 <div style={{ flex: "1" }} >
                     <ul style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }} >
                         {messages.map(message =>
 
-                            <span key={message} style={{margin:"5px",background:"#29B6F6",padding:"2px 6px",borderRadius:"12px",color:"#FFFFFF"}}>
+                            <span key={message} style={{ margin: "5px", background: "#29B6F6", padding: "2px 6px", borderRadius: "12px", color: "#FFFFFF" }}>
                                 {message}
                             </span>
 

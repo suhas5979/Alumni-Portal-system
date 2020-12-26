@@ -6,9 +6,9 @@ import 'reactjs-popup/dist/index.css';
 
 const AlumniDashboard = (props) => {
 
-    const [schollarships, setSchollarships] = useState(null)
+    const [schollarships, setSchollarships] = useState([])
     const [active, setActive] = useState("Applications")
-    
+
     useEffect(() => {
         getAllStudents()
     }, [])
@@ -31,7 +31,7 @@ const AlumniDashboard = (props) => {
     function decideTextColor(name) {
         return active === name ? '#FFFFFF' : '#000000';
     }
-    if(sessionStorage.getItem("alumni")=== null){
+    if (sessionStorage.getItem("alumni") === null) {
         props.history.push("/alumni_login");
     }
     return (
@@ -53,8 +53,13 @@ const AlumniDashboard = (props) => {
                 </div>{active === "Applications" && (
                     <div className="list-schollarship">
                         <ul>
-                            {schollarships !== null && schollarships.length > 0 &&
-                                schollarships.map((schollarship, i) =>
+                            {schollarships.length === 0 ?
+                                <li>
+                                    <div className="schlp-item">
+                                        <span>No applications</span>
+                                    </div>
+                                </li>
+                                : schollarships.map((schollarship, i) =>
                                     <li key={`${schollarship.name}${schollarship.schollarship_name}`} style={{ background: decideBackground(i) }} >
                                         <div className="schlp-item">
                                             <h4>{schollarship.name}</h4>
@@ -84,10 +89,10 @@ const AlumniDashboard = (props) => {
     )
 }
 const RejectedApplication = () => {
-    const [rejectedApplications, setRejectedApplications] = useState(null);
+    const [rejectedApplications, setRejectedApplications] = useState([]);
 
     function decideBackground(i) {
-        if (i % 2 == 0) {
+        if (i % 2 === 0) {
             return '#dddddd'
         }
         else {
@@ -106,8 +111,14 @@ const RejectedApplication = () => {
     return (
         <div className="list-schollarship">
             <ul>
-                {rejectedApplications !== null && rejectedApplications.length > 0 &&
-                    rejectedApplications.map((schollarship, i) =>
+                {rejectedApplications.length === 0 ?
+                    <li>
+                        <div className="schlp-item">
+                            <span>No applications</span>
+                        </div>
+                    </li>
+
+                    : rejectedApplications.map((schollarship, i) =>
                         <li key={`${schollarship.name}${schollarship.schollarship_name}`} style={{ background: decideBackground(i) }} >
                             <div className="schlp-item">
                                 <h4>{schollarship.name}</h4>
@@ -122,10 +133,10 @@ const RejectedApplication = () => {
     )
 }
 const ApprovedApplication = () => {
-    const [approvedApplications, setApprovedApplications] = useState(null);
+    const [approvedApplications, setApprovedApplications] = useState([]);
 
     function decideBackground(i) {
-        if (i % 2 == 0) {
+        if (i % 2 === 0) {
             return '#dddddd'
         }
         else {
@@ -144,8 +155,13 @@ const ApprovedApplication = () => {
     return (
         <div className="list-schollarship">
             <ul>
-                {approvedApplications !== null && approvedApplications.length > 0 &&
-                    approvedApplications.map((schollarship, i) =>
+                {approvedApplications.length == 0 ?
+                    <li>
+                        <div className="schlp-item">
+                            <span>No applications</span>
+                        </div>
+                    </li>
+                    : approvedApplications.map((schollarship, i) =>
                         <li key={`${schollarship.name}${schollarship.schollarship_name}`} style={{ background: decideBackground(i) }} >
                             <div className="schlp-item">
                                 <h4>{schollarship.name}</h4>
@@ -193,7 +209,7 @@ const SchollarshipForm = ({ schollarship }) => {
             <div className="schollarship-info-item">
                 <span>Adhaar No</span><span >{schollarship.adhaar}</span></div>
             <div className="schollarship-info-item-btn">
-                <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button> 
+                <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button>
                 <Button onClick={rejectApplication} color="primary" variant="contained" style={{ background: "#f44336" }}>Reject</Button></div>
         </div>
     )
