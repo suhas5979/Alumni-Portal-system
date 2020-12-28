@@ -28,6 +28,15 @@ a {
   text-decoration: none;
 }
 
+.center-flex {
+  display: flex;
+  justify-content: center;
+}
+
+.text-area:focus-within {
+  border: 1px solid #3F51B5;
+}
+
 /* Home */
 
 .scroll {
@@ -217,7 +226,7 @@ a {
 .student-dashboard-container {}
 
 .student-dash-nav {
-  height: 60px;
+  height: 50px;
   background: var(--color-secondary);
 }
 
@@ -292,13 +301,16 @@ a {
   grid-area: schlp-list;
   font-family: 'Poppins', sans-serif;
 }
-.student-profile-nav ul li{
+
+.student-profile-nav ul li {
   padding: 5px;
   cursor: pointer;
 }
-.student-profile-nav ul li:hover{
+
+.student-profile-nav ul li:hover {
   background-color: #0288D1;
 }
+
 .font {
   font-family: 'Poppins', sans-serif;
 }
@@ -378,10 +390,9 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  height: 85vh;
+  height: calc(100vh-50px);
   overflow-y: scroll;
   width: 30vw;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .student-home .alumni-list ul {
@@ -437,10 +448,15 @@ a {
   padding: 5px;
   border-radius: 5px;
   margin: 5px;
+  color: #FFFFFF;
   border: 1px solid #FFFFFF;
 }
 
-.alumni-dash-nav ul li:hover {}
+.alumni-dash-nav ul li:hover {
+  background: #FFFFFF;
+  color: #00BCD4;
+  cursor: pointer;
+}
 
 .alumni-dash-side-nav {
   grid-area: side-nav;
@@ -455,7 +471,7 @@ a {
 }
 
 .alumni-dash-side-nav ul li {
-  padding: 5px;
+  padding: 10px;
 }
 
 .alumni-dash-side-nav ul li:hover {

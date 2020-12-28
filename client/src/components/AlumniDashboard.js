@@ -19,10 +19,10 @@ const AlumniDashboard = (props) => {
     }
     function decideBackground(i) {
         if (i % 2 == 0) {
-            return '#dddddd'
+            return '#64B5F6'
         }
         else {
-            return '#FFFFFF'
+            return '#B2EBF2'
         }
     }
     function decideColor(name) {
@@ -34,12 +34,15 @@ const AlumniDashboard = (props) => {
     if (sessionStorage.getItem("alumni") === null) {
         props.history.push("/alumni_login");
     }
+    function logout() {
+        sessionStorage.removeItem("alumni");
+        props.history.push("/alumni_login");
+    }
     return (
         <div className="alumni-dashboard-container">
-            <div className="alumni-dash-nav">
+            <div className="alumni-dash-nav" style={{ borderBottom: "1px solid #000000" }}>
                 <ul>
-                    <li>Home</li>
-                    <li>Logout</li>
+                    <li onClick={logout}>Logout</li>
                 </ul>
             </div>
             <div className="alumni-dash-schollarships">
@@ -65,8 +68,11 @@ const AlumniDashboard = (props) => {
                                             <h4>{schollarship.name}</h4>
                                             <h5>{schollarship.schollarship_name}</h5>
                                             <div>
+                                                <Popup trigger={<Button variant="contained" color="primary" style={{marginRight:"5px", background: "#f44336" }} >Student Info</Button>} modal >
+                                                    {close => <StudentInfo close={close} schollarship={schollarship} />}
+                                                </Popup>
 
-                                                <Button variant="outlined" color="primary" >Student Info</Button>
+
                                                 <Popup trigger={
                                                     <Button variant="contained" color="primary" style={{ background: "#43A047" }} >View</Button>} modal >
                                                     <SchollarshipForm schollarship={schollarship} />
@@ -124,7 +130,9 @@ const RejectedApplication = () => {
                                 <h4>{schollarship.name}</h4>
                                 <h5>{schollarship.schollarship_name}</h5>
                                 <div>
-                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Reason For Rejection</Button>
+                                    <Popup trigger={<Button variant="contained" color="primary" style={{ background: "#43A047" }} >Reason For Rejection</Button>} modal >
+                                        {close => <ReasonForRejection close={close} schollarship={schollarship} />}
+                                    </Popup>
                                 </div>
                             </div>
                         </li>)}
@@ -167,11 +175,38 @@ const ApprovedApplication = () => {
                                 <h4>{schollarship.name}</h4>
                                 <h5>{schollarship.schollarship_name}</h5>
                                 <div>
-                                    <Button variant="contained" color="primary" style={{ background: "#43A047" }} >Check Status</Button>
+                                    <Popup trigger={<Button variant="contained" color="primary" style={{ background: "#43A047" }} >Check Status</Button>} modal >
+                                        {close => <CheckStatus close={close} schollarship={schollarship} />}
+                                    </Popup>
+
                                 </div>
                             </div>
                         </li>)}
             </ul>
+        </div>
+    )
+}
+const StudentInfo = ({ schollarship, close }) => {
+    return (
+        <div className="schollarship-form">
+            <div className="schollarship-info-item">
+                <span>Name</span><span >{schollarship.name}</span></div>
+            <div className="schollarship-info-item">
+                <span>Email</span><span >{schollarship.email}</span></div>
+
+            <div className="schollarship-info-item">
+                <span>Address </span><span >{schollarship.address}</span></div>
+            <div className="schollarship-info-item">
+                <span>Annual Family Income</span><span >{schollarship.income}</span></div>
+            <div className="schollarship-info-item">
+                <span>Cast</span><span >{schollarship.cast}</span></div>
+
+            <div className="schollarship-info-item">
+                <span>Date of Birth</span><span >{schollarship.dateOfBirth}</span></div>
+            <div className="schollarship-info-item">
+                <span>Adhaar No</span><span >{schollarship.adhaar}</span></div>
+            <div className="schollarship-info-item-btn">
+                <Button onClick={close} color="primary" variant="contained" style={{ background: "#f44336" }}>Close</Button></div>
         </div>
     )
 }
@@ -211,6 +246,30 @@ const SchollarshipForm = ({ schollarship }) => {
             <div className="schollarship-info-item-btn">
                 <Button onClick={approveApplication} color="primary" variant="contained" style={{ background: "#43A047" }}>Approved</Button>
                 <Button onClick={rejectApplication} color="primary" variant="contained" style={{ background: "#f44336" }}>Reject</Button></div>
+        </div>
+    )
+}
+const CheckStatus = ({ scholarship, close }) => {
+    return (
+        <div>
+            <h3 style={{ textAlign: "center" }}>Ready for Disbursment</h3>
+            <div className="center-flex">
+                <Button onClick={close} color="primary" variant="contained" style={{ background: "#f44336" }}>OK</Button>
+            </div>
+
+        </div>
+    )
+}
+
+const ReasonForRejection = ({ scholarship, close }) => {
+    console.log(close)
+    return (
+        <div>
+            <h3 style={{ textAlign: "center" }}>No reason found</h3>
+            <div className="center-flex">
+                <Button onClick={close} color="primary" variant="contained" style={{ background: "#f44336" }}>OK</Button>
+            </div>
+
         </div>
     )
 }

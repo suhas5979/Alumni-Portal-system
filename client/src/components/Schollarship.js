@@ -4,22 +4,23 @@ import axios from 'axios';
 import { Faqs } from './data/FAQs'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-
+const schol = [{ name: "Pragati Schollarship", candidates: "For girls" },
+{ name: "Leadership Schollarship", candidates: "" },
+{ name: "1000 Dreams Schollarship", candidates: "" },
+{ name: "Startup Schollarship", candidates: "" }
+];
+function decideBackground(i) {
+    if (i % 2 == 0) {
+        return '#64B5F6'
+    }
+    else {
+        return '#B2EBF2'
+    }
+}
 const Schollarship = (props) => {
     const [active, setActive] = useState("Profile");
 
     const [student, setStudent] = useState(null);
-
-
-
-    function decideBackground(i) {
-        if (i % 2 == 0) {
-            return '#dddddd'
-        }
-        else {
-            return '#FFFFFF'
-        }
-    }
     function decideColor(name) {
         return active === name ? '#0097A7' : '#FFFFFF';
     }
@@ -50,64 +51,23 @@ const Schollarship = (props) => {
             </div>
             {active === "All Schollarship" && (<div className="schollarship-list" >
                 <ul>
-                    <li>
-                        <div className="schlp-info">
-                            <h4>Pragati Schollarship</h4>
-                            <span>For girls</span>
-                        </div>
-
-                        <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
-                            <SchollarshipCriteria name={"Pragati Schollarship"} />
-                        </Popup>
-
-                        <Popup trigger={<Button variant="contained" color="primary">Apply Now</Button>} modal >
-                            <ScholarshipForm student={student} name={"Pragati Schollarship"} email={email} />
-                        </Popup>
-
-
-                    </li>
-                    <li>
-
-                        <div className="schlp-info">
-                            <h4>1000 Dreams Schollarship</h4>
-                            <span>For girls</span>
-                        </div>
-                        <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
-                            <SchollarshipCriteria name={"1000 Dreams Schollarship"} />
-                        </Popup>
-                        <Popup trigger={<Button variant="contained" color="primary" >Apply Now</Button>} modal >
-                            <ScholarshipForm student={student} name={"1000 Dreams Schollarship"} email={email} />
-                        </Popup>
-                    </li>
-                    <li>
-                        <div className="schlp-info">
-                            <h4>Leadership Developement Schollarship</h4>
-                            <span>Leadership</span>
-                        </div>
-                        <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
-                            <SchollarshipCriteria name={"Leadership Developement Schollarship"} />
-                        </Popup>
-                        <Popup trigger={
-                            <Button variant="contained" color="primary" >Apply Now</Button>} modal >
-                            <ScholarshipForm student={student} name={"Leadership Developement Schollarship"} email={email} />
-                        </Popup></li>
-                    <li>
-                        <div className="schlp-info">
-                            <h4>Startup Schollarship</h4>
-                            <span>For Entrepreneur</span>
-                        </div>
-                        <Popup trigger={<Button variant="outlined" color="primary"  >eligibility criteria</Button>} modal >
-                            <SchollarshipCriteria name={"Startup Schollarship"} />
-                        </Popup>
-                        <Popup trigger={
-                            <Button variant="contained" color="primary">Apply Now</Button>} modal >
-                            {console.log(student)}
-                            <ScholarshipForm student={student} name={"Startup Schollarship"} email={email} />
-                        </Popup></li>
+                    {schol.map(sch =>
+                        <li>
+                            <div className="schlp-info">
+                                <h4>{sch.name}</h4>
+                                <span>{sch.candidates}</span>
+                            </div>
+                            <Popup trigger={<Button variant="outlined" color="primary" style={{marginRight:"5px"}}  >eligibility criteria</Button>} modal >
+                                <SchollarshipCriteria name={sch.name} />
+                            </Popup>
+                            <Popup trigger={<Button variant="contained" color="primary">Apply Now</Button>} modal >
+                                {close => <ScholarshipForm close={close} student={student} name={sch.name} email={email} />}
+                            </Popup>
+                        </li>)}
                 </ul>
             </div>)}
             {active === "Profile" && student !== null && (
-                <StudentProfile student={student} />)}
+                <StudentProfile callback={getStudentInfo} student={student} />)}
             {active === "My Applied Schollarship" && (
                 <MyAppliedScholarships email={email} />
             )}
@@ -142,7 +102,7 @@ const Schollarship = (props) => {
         </div>
     )
 }
-const ScholarshipForm = ({ name: scholarship, email, student }) => {
+const ScholarshipForm = ({ name: scholarship, email, student, close }) => {
     console.log(student)
     const [fullName, setFullName] = useState(student.fullName);
     const [address, setAddress] = useState(student.address);
@@ -165,6 +125,7 @@ const ScholarshipForm = ({ name: scholarship, email, student }) => {
         if (validateForm()) {
             try {
                 const res = await axios.post('/api/schollarship', { dateOfBirth: dateOfBirth, email: email, address: address, income: income, cast: cast, contact: mobileNo, name: fullName, schollarship_name: scholarship });
+                close();
             } catch (err) {
                 window.alert("schollarship not register")
             }
@@ -219,7 +180,7 @@ const ScholarshipForm = ({ name: scholarship, email, student }) => {
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-around", padding: "10px" }} >
                     <Button onClick={applySchollarship} variant="contained" color="primary" style={{ background: "#43A047" }} >Apply for Scholarship</Button>
-                    <Button variant="contained" color="primary" style={{ background: "#f44336" }} >Discard</Button>
+                    <Button onClick={close} variant="contained" color="primary" style={{ background: "#f44336" }} >Discard</Button>
                 </div>
             </div>
         </>
@@ -282,7 +243,7 @@ const FaqInformation = ({ info }) => {
         </div>
     )
 }
-const StudentProfile = ({ student }) => {
+const StudentProfile = ({ callback ,student }) => {
     const [fullName, setFullName] = useState("");
     const [address, setAddress] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -314,6 +275,7 @@ const StudentProfile = ({ student }) => {
             try {
                 const res = await axios.patch('/api/student', { email: student.email, fullName, address, dateOfBirth, mobileNo });
                 console.log(res.data)
+                callback();
 
             } catch (err) {
                 window.alert("something went wrong")
@@ -371,19 +333,19 @@ const StudentProfile = ({ student }) => {
                 {active === "Edit Information" && (
                     <div style={{ padding: "5px" }}>
                         <div className="input-margin" >
-                            <TextField onChange={(e) => setFullName(e.target.value)} label="Full Name" />
+                            <TextField fullWidth onChange={(e) => setFullName(e.target.value)} label="Full Name" />
                         </div>
                         <div className="input-margin" >
-                            <TextField disabled value={student.email} label="Email" />
+                            <TextField fullWidth disabled value={student.email} label="Email" />
                         </div>
                         <div className="input-margin" >
-                            <TextField onChange={(e) => setAddress(e.target.value)} label="Address" />
+                            <TextField fullWidth onChange={(e) => setAddress(e.target.value)} label="Address" />
                         </div>
                         <div className="input-margin" >
-                            <TextField onChange={(e) => setMobileNo(e.target.value)} label="Mobile No" />
+                            <TextField fullWidth onChange={(e) => setMobileNo(e.target.value)} label="Mobile No" />
                         </div>
                         <div className="input-margin" >
-                            <TextField onChange={(e) => setDateOfBirth(e.target.value)} label="Date of Birth" />
+                            <TextField fullWidth onChange={(e) => setDateOfBirth(e.target.value)} label="Date of Birth" />
                         </div>
                         <Button onClick={editProfile} style={{ background: "#03A9F4", color: "#FFFFFF" }} > Edit</Button>
                     </div>
@@ -440,8 +402,8 @@ const MyAppliedScholarships = ({ email }) => {
                             <span>No applications</span>
                         </div>
                     </li>
-                    : (scholarships).map(scholarship =>
-                        <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                    : (scholarships).map((scholarship,i) =>
+                        <li style={{background:decideBackground(i)}} key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
                                 <h3>{scholarship.schollarship_name}</h3>
                                 <h4 style={{ color: decideColorForStatus(scholarship.status) }}>{scholarship.status}</h4>
@@ -478,8 +440,8 @@ const MyRejectedScholarships = ({ email }) => {
                             <span>No applications</span>
                         </div>
                     </li>
-                    : (scholarships).map(scholarship =>
-                        <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                    : (scholarships).map((scholarship,i) =>
+                        <li style={{background:decideBackground(i)}} key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
                                 <h3>{scholarship.schollarship_name}</h3>
                                 {console.log(scholarship.status)}

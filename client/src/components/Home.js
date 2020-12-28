@@ -1,19 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { Button } from '@material-ui/core';
 
 function Home() {
-    const [alumnis, setAlumnis] = useState(null);
-
-    useEffect(() => {
-        getAllAlumnis()
-    }, []);
-    async function getAllAlumnis() {
-        const res = await axios.get('/api/alumni');
-        setAlumnis(res.data);
-        console.log(res.data);
-    }
     return (
         <div className="home-container">
             <nav className="nav">

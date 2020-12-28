@@ -39,7 +39,7 @@ const StudentDashboard = (props) => {
 }
 const Nav = () => {
     return (
-        <div className="student-dash-nav">
+        <div className="student-dash-nav" style={{borderBottom:"1px solid #000000"}}>
             <ul >
                 <Link to="/student/home"><li>Home</li></Link>
 
@@ -143,6 +143,13 @@ const SendMessage = ({ name }) => {
                     <IconButton onClick={sendMessage} style={{ color: "#4CAF50" }}><SendIcon /> </IconButton>
                 </div>
             </div>
+        </div>
+    )
+}
+const About =() =>{
+    return(
+        <div>
+            
         </div>
     )
 }
