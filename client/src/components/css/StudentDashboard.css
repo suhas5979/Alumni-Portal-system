@@ -1,0 +1,28 @@
+.student-dashboard-container {}
+
+.student-dash-nav {
+  height: 50px;
+  background: var(--color-secondary);
+}
+
+.student-dash-nav ul {
+  display: flex;
+  align-items: center;
+  float: right;
+  list-style: none;
+}
+
+.student-dash-nav ul li {
+  padding: 5px;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  color: #FFFFFF;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.student-dash-nav ul li:hover {
+  display: flex;
+  background: #FFFFFF;
+  color: var(--color-primary);
+}

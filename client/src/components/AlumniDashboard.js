@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom'
 import { Button } from '@material-ui/core';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-
+import './css/AlumniDashboard.css';
 const AlumniDashboard = (props) => {
 
+    document.title = "Alumni Portal | Alumni Dashboard";
     const [schollarships, setSchollarships] = useState([])
     const [active, setActive] = useState("Applications")
-
+    const history = useHistory();
     useEffect(() => {
         getAllStudents()
     }, [])
@@ -32,11 +34,11 @@ const AlumniDashboard = (props) => {
         return active === name ? '#FFFFFF' : '#000000';
     }
     if (sessionStorage.getItem("alumni") === null) {
-        props.history.push("/alumni_login");
+        history.push("/alumni_login");
     }
     function logout() {
         sessionStorage.removeItem("alumni");
-        props.history.push("/alumni_login");
+        history.push("/alumni_login");
     }
     return (
         <div className="alumni-dashboard-container">
@@ -48,10 +50,10 @@ const AlumniDashboard = (props) => {
             <div className="alumni-dash-schollarships">
                 <div className="alumni-dash-side-nav">
                     <ul>
-                        <li onClick={() => setActive("Home")} style={{ background: decideColor("Home"), color: decideTextColor("Home") }} >Home</li>
-                        <li onClick={() => setActive("Applications")} style={{ background: decideColor("Applications"), color: decideTextColor("Applications") }} >Applications</li>
-                        <li onClick={() => setActive("Approved Applications")} style={{ background: decideColor("Approved Applications"), color: decideTextColor("Approved Applications") }} >Approved Applications</li>
-                        <li onClick={() => setActive("Rejected Applications")} style={{ background: decideColor("Rejected Applications"), color: decideTextColor("Rejected Applications") }} >Rejected Applications</li>
+                        <li className={`${active==="Home" && "alumni-dash-side-nav--selected"}`} onClick={() => setActive("Home")} >Home</li>
+                        <li className={`${active==="Applications" && "alumni-dash-side-nav--selected"}`} onClick={() => setActive("Applications")} >Applications</li>
+                        <li className={`${active==="Approved Applications" && "alumni-dash-side-nav--selected"}`} onClick={() => setActive("Approved Applications")} >Approved Applications</li>
+                        <li className={`${active==="Rejected Applications" && "alumni-dash-side-nav--selected"}`} onClick={() => setActive("Rejected Applications")}>Rejected Applications</li>
                     </ul>
                 </div>{active === "Applications" && (
                     <div className="list-schollarship">
@@ -68,7 +70,7 @@ const AlumniDashboard = (props) => {
                                             <h4>{schollarship.name}</h4>
                                             <h5>{schollarship.schollarship_name}</h5>
                                             <div>
-                                                <Popup trigger={<Button variant="contained" color="primary" style={{marginRight:"5px", background: "#f44336" }} >Student Info</Button>} modal >
+                                                <Popup trigger={<Button variant="contained" color="primary" style={{ marginRight: "5px", background: "#f44336" }} >Student Info</Button>} modal >
                                                     {close => <StudentInfo close={close} schollarship={schollarship} />}
                                                 </Popup>
 

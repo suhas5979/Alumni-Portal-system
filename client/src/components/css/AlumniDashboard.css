@@ -1,0 +1,88 @@
+.alumni-dash-schollarships {
+    display: grid;
+    grid-template-areas: "side-nav schollarship schollarship schollarship schollarship schollarship";
+  }
+  
+  .alumni-dash-nav {
+    background: var(--color-secondary);
+    height: 50px;
+  }
+  
+  .alumni-dash-nav ul {
+    display: flex;
+    float: right;
+    list-style: none;
+  }
+  
+  .alumni-dash-nav ul li {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+  }
+  
+  .alumni-dash-nav ul li:hover {
+    background: #FFFFFF;
+    color: #00BCD4;
+    cursor: pointer;
+  }
+  
+  .alumni-dash-side-nav {
+    grid-area: side-nav;
+    border-right: 1px solid #dddddd;
+    height: 100vh;
+  }
+  
+  .alumni-dash-side-nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .alumni-dash-side-nav ul li {
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  .alumni-dash-side-nav ul li:hover {
+    background: var(--color-secondary);
+    color: #FFFFFF;
+    cursor: pointer;
+  }
+  .alumni-dash-side-nav--selected{
+    background: #0097A7;
+    color:#FFFFFF;
+  }
+  .list-schollarship {
+    grid-area: schollarship;
+  }
+  
+  .list-schollarship ul li {}
+  
+  .schlp-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+  }
+  
+  .schollarship-form {
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .schollarship-form .schollarship-info-item {
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .schollarship-form .schollarship-info-item>span {
+    flex: 1;
+  }
+  
+  .schollarship-form .schollarship-info-item-btn {
+    display: flex;
+    justify-content: space-around;
+  }

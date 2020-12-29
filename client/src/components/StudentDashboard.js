@@ -9,12 +9,16 @@ import MessageIcon from '@material-ui/icons/Message';
 import SendIcon from '@material-ui/icons/Send';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-
+import './css/StudentDashboard.css';
 const StudentDashboard = (props) => {
+    document.title ="Alumni Portal | Student Dashboard"
+    useEffect(() => {
+        if (sessionStorage.getItem("email") === null) {
+            props.history.push("/student_login");
+        }   
+    }, [])
 
-    if (sessionStorage.getItem("email") === null) {
-        props.history.push("/student_login");
-    }
+    
     return (
         <div className="student-dashboard-container">
             <Switch>

@@ -1,0 +1,22 @@
+.reg-container {
+    background-image: linear-gradient(#039BE5, #00ACC1);
+    height: 100vh;
+    display: grid;
+    align-items: center;
+    grid-template-areas: ".. form ..";
+  }
+  
+  .reg-container .reg-form {
+    border-radius: 1rem;
+    padding: 1rem;
+    grid-area: form;
+    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .reg-form .input-container {
+    width: 80%;
+    margin: 1rem 0;
+  }

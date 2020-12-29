@@ -1,0 +1,197 @@
+.schollarship-page {
+  display: grid;
+  grid-template-areas: "schlp-nav schlp-list schlp-list schlp-list schlp-list";
+}
+
+.schollarship-list {
+  grid-area: schlp-list;
+}
+
+.schollarship-list ul {
+  list-style: none;
+}
+
+.schollarship-list ul li {
+  padding: 10px;
+  display: flex;
+  border-bottom: 1px solid #dddddd;
+}
+
+.schollarship-nav {
+  grid-area: schlp-nav;
+  border-right: 1px solid #dddddd;
+  height: 90vh;
+}
+
+.schollarship-nav ul {
+  list-style: none;
+  
+}
+
+.schollarship-nav ul li {
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+}
+
+.schollarship-nav ul li:hover {
+  background: var(--color-secondary);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.schlp-info {
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.schlp-profile {
+  grid-area: schlp-list;
+  font-family: 'Poppins', sans-serif;
+}
+
+.student-profile-nav ul li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.scholarship-nav--selected {
+  background: #0097A7;
+  color: #FFFFFF;
+}
+
+.student-profile-nav ul li:hover {
+  background-color: #0288D1;
+}
+
+.font {
+  font-family: 'Poppins', sans-serif;
+}
+
+.profile-form {
+  margin: 10px;
+  width: 70%;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #dddddd;
+}
+
+.profile-form select {
+  flex: 1;
+  margin: 0 5px;
+}
+
+.input-schlp {
+  margin: 5px 0;
+}
+
+.select-merge {
+  width: 100%;
+  justify-content: space-around;
+  display: flex;
+}
+
+.button-separator {
+  display: flex;
+  justify-content: space-around;
+}
+
+.applied-schollarship {
+  grid-area: schlp-list;
+  overflow-y: scroll;
+  height: 90vh;
+}
+
+.applied-schollarship ul {
+  list-style: none;
+}
+
+.applied-schollarship ul li {
+  padding: 5px;
+}
+
+.applied-schollarship ul li .schlp-info span {}
+
+.applied-schollarship ul li .schlp-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scholarship-form {
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.input-margin {
+  margin: 5px 0;
+}
+
+.student-home {
+  display: grid;
+  grid-template-areas: "alumni-list std-home std-home";
+}
+
+.student-home .student-home-content {
+  grid-area: std-home;
+  width: 100%;
+}
+
+.student-home>.alumni-list {
+  grid-area: alumni-list;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: calc(100vh-50px);
+  overflow-y: scroll;
+  width: 30vw;
+}
+
+.student-home .alumni-list ul {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.student-home .alumni-list ul li {
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.student-home .alumni-list .alumni-item img {
+  height: 35px;
+  padding: 5px;
+}
+
+.student-home .alumni-list .alumni-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.student-home .alumni-list .alumni-item>div {
+  display: flex;
+  align-items: center;
+}
+
+.student-home .alumni-list .alumni-item span {
+  font-size: 1.2rem;
+}
+
+.criteria-popup {
+  font-family: 'Poppins', sans-serif;
+  padding: 10px;
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.criteria-popup>div {
+  margin: 10px;
+  border-bottom: 1px solid #dddddd;
+}
+
+.criteria-popup h3 {
+  border-bottom: 1px solid #dddddd;
+}

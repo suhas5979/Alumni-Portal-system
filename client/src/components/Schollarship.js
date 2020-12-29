@@ -4,6 +4,13 @@ import axios from 'axios';
 import { Faqs } from './data/FAQs'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import './css/Scholarship.css';
 const schol = [{ name: "Pragati Schollarship", candidates: "For girls" },
 { name: "Leadership Schollarship", candidates: "" },
 { name: "1000 Dreams Schollarship", candidates: "" },
@@ -18,15 +25,10 @@ function decideBackground(i) {
     }
 }
 const Schollarship = (props) => {
+    document.title = "Alumni Portal | Student | Scholarship"
     const [active, setActive] = useState("Profile");
 
     const [student, setStudent] = useState(null);
-    function decideColor(name) {
-        return active === name ? '#0097A7' : '#FFFFFF';
-    }
-    function decideTextColor(name) {
-        return active === name ? '#FFFFFF' : '#000000';
-    }
     const email = sessionStorage.getItem("email");
 
     useEffect(() => {
@@ -42,11 +44,11 @@ const Schollarship = (props) => {
         <div className="schollarship-page">
             <div className="schollarship-nav">
                 <ul>
-                    <li onClick={() => setActive("Profile")} style={{ background: decideColor("Profile"), color: decideTextColor("Profile") }}>Profile</li>
-                    <li onClick={() => setActive("All Schollarship")} style={{ background: decideColor("All Schollarship"), color: decideTextColor("All Schollarship") }}>All Schollarship</li>
-                    <li onClick={() => { setActive("My Applied Schollarship") }} style={{ background: decideColor("My Applied Schollarship"), color: decideTextColor("My Applied Schollarship") }}>My applied Schollarship</li>
-                    <li onClick={() => setActive("Rejected Applications")} style={{ background: decideColor("Rejected Applications"), color: decideTextColor("Rejected Apllications") }}>Rejected Applications</li>
-                    <li onClick={() => setActive("FAQs")} style={{ background: decideColor("FAQs"), color: decideTextColor("FAQs") }}>FAQs</li>
+                    <li className={`${active === "Profile" && "scholarship-nav--selected"}`} onClick={() => setActive("Profile")} >Profile</li>
+                    <li className={`${active === "All Schollarship" && "scholarship-nav--selected"}`} onClick={() => setActive("All Schollarship")}>All Schollarship</li>
+                    <li className={`${active === "My Applied Schollarship" && "scholarship-nav--selected"}`} onClick={() => { setActive("My Applied Schollarship") }} >My applied Schollarship</li>
+                    <li className={`${active === "Rejected Applications" && "scholarship-nav--selected"}`} onClick={() => setActive("Rejected Applications")} >Rejected Applications</li>
+                    <li className={`${active === "FAQs" && "scholarship-nav--selected"}`} onClick={() => setActive("FAQs")} >FAQs</li>
                 </ul>
             </div>
             {active === "All Schollarship" && (<div className="schollarship-list" >
@@ -57,7 +59,7 @@ const Schollarship = (props) => {
                                 <h4>{sch.name}</h4>
                                 <span>{sch.candidates}</span>
                             </div>
-                            <Popup trigger={<Button variant="outlined" color="primary" style={{marginRight:"5px"}}  >eligibility criteria</Button>} modal >
+                            <Popup trigger={<Button variant="outlined" color="primary" style={{ marginRight: "5px" }}  >eligibility criteria</Button>} modal >
                                 <SchollarshipCriteria name={sch.name} />
                             </Popup>
                             <Popup trigger={<Button variant="contained" color="primary">Apply Now</Button>} modal >
@@ -243,7 +245,7 @@ const FaqInformation = ({ info }) => {
         </div>
     )
 }
-const StudentProfile = ({ callback ,student }) => {
+const StudentProfile = ({ callback, student }) => {
     const [fullName, setFullName] = useState("");
     const [address, setAddress] = useState("");
     const [dateOfBirth, setDateOfBirth] = useState("");
@@ -391,7 +393,7 @@ const MyAppliedScholarships = ({ email }) => {
         setScholarships(res.data)
     }
     function decideColorForStatus(text) {
-        return text === "Rejected" ? "#f44336" : "#4CAF50";
+        return text === "Rejected" ? "#f44336" : "#76FF03";
     }
     return (
         <div className="applied-schollarship">
@@ -402,8 +404,8 @@ const MyAppliedScholarships = ({ email }) => {
                             <span>No applications</span>
                         </div>
                     </li>
-                    : (scholarships).map((scholarship,i) =>
-                        <li style={{background:decideBackground(i)}} key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                    : (scholarships).map((scholarship, i) =>
+                        <li style={{ background: decideBackground(i) }} key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
                                 <h3>{scholarship.schollarship_name}</h3>
                                 <h4 style={{ color: decideColorForStatus(scholarship.status) }}>{scholarship.status}</h4>
@@ -440,8 +442,8 @@ const MyRejectedScholarships = ({ email }) => {
                             <span>No applications</span>
                         </div>
                     </li>
-                    : (scholarships).map((scholarship,i) =>
-                        <li style={{background:decideBackground(i)}} key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                    : (scholarships).map((scholarship, i) =>
+                        <li style={{ background: decideBackground(i) }} key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
                                 <h3>{scholarship.schollarship_name}</h3>
                                 {console.log(scholarship.status)}
@@ -456,4 +458,5 @@ const MyRejectedScholarships = ({ email }) => {
         </div>
     )
 }
+
 export default Schollarship

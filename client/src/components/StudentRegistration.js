@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@material-ui/core'
 import axios from 'axios';
+import './css/StudentRegistration.css';
 
 const StudentRegistration = (props) => {
+    document.title ="Alumni Portal | Student Registration"
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

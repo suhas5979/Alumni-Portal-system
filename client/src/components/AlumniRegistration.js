@@ -4,7 +4,7 @@ import { TextField, Button } from '@material-ui/core';
 import axios from 'axios';
 
 const AlumniRegistration = (props) => {
-
+    document.title ="Alumni Portal | Alumni Registration"
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
