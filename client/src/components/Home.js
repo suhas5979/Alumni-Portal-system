@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 import './css/Home.css';
 
 function Home() {
@@ -44,11 +46,19 @@ const Login = () => {
 }
 const imgs =[require('../assets/Alumni.jpg'),require('../assets/scholarship.png'),require('../assets/industry.jpg')]
 const SlideShow = () =>{
-    let [current,setCurrent] = useState(0);
-
     return(
         <div className="slide-show">
-            <img src={imgs[current]} />
+             <Carousel showIndicators  showArrows={true} >
+                <div>
+                    <img src={imgs[0]} />
+                </div>
+                <div>
+                    <img src={imgs[1]} />
+                </div>
+                <div>
+                    <img src={imgs[2]} />
+                </div>
+            </Carousel>
         </div>
     )
 }

@@ -10,9 +10,10 @@
   .slide-show{
       grid-area:slideshow;
       display: flex;
+      max-width: 60vw ;
+      padding: 10px;
       align-items: center;
       justify-content: center;
-      border: 1px solid #dddddd;
   }
   .nav {
     height: var(--nav-size);

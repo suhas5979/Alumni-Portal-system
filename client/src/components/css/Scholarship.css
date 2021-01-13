@@ -109,7 +109,8 @@
 }
 
 .applied-schollarship ul li {
-  padding: 5px;
+  margin: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .applied-schollarship ul li .schlp-info span {}

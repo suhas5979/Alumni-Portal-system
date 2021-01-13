@@ -4,12 +4,6 @@ import axios from 'axios';
 import { Faqs } from './data/FAQs'
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
 import './css/Scholarship.css';
 const schol = [{ name: "Pragati Schollarship", candidates: "For girls" },
 { name: "Leadership Schollarship", candidates: "" },
@@ -18,10 +12,10 @@ const schol = [{ name: "Pragati Schollarship", candidates: "For girls" },
 ];
 function decideBackground(i) {
     if (i % 2 == 0) {
-        return '#64B5F6'
+        return '#90CAF9'
     }
     else {
-        return '#B2EBF2'
+        return '#64B5F6'
     }
 }
 const Schollarship = (props) => {
@@ -90,7 +84,7 @@ const Schollarship = (props) => {
                             : (Faqs).map((faq, i) =>
                                 <li key={faq} style={{ background: decideBackground(i) }} >
                                     <div className="schlp-item">
-                                        <h3>{faq.name}</h3>
+                                        <h5>{faq.name}</h5>
                                         <Popup trigger={<Button variant="contained" color="primary">View</Button>} modal >
                                             <FaqInformation info={faq.info} />
                                         </Popup>
@@ -241,7 +235,8 @@ const FaqInformation = ({ info }) => {
     console.log(info)
     return (
         <div style={{ padding: "10px" }}>
-            <p >{info} </p>
+            <h2 style={{ textAlign: "center",color: "#FF5722" }}>Answer</h2>
+            <p style={{paddingTop: "10px" }}>{info} </p>
         </div>
     )
 }
@@ -369,12 +364,12 @@ const AreYouSureWarning = ({ scholarship, msg }) => {
         </div>
     )
 }
-const ViewInfo = ({ msg }) => {
+const ViewInfo = ({ msg,close }) => {
     return (
-        <div className="font" style={{ display: "flex", flexDirection: "column" }}>
+        <div className="font" style={{ padding:"10px", display: "flex", flexDirection: "column" }}>
             <p>{msg}</p>
             <div style={{ display: "flex", justifyContent: "center" }}>
-                <Button style={{ background: "#f44336", color: "#FFFFFF" }} >Close</Button>
+                <Button onClick={close} style={{ background: "#f44336", color: "#FFFFFF" }} >Close</Button>
             </div>
 
         </div>
@@ -393,7 +388,7 @@ const MyAppliedScholarships = ({ email }) => {
         setScholarships(res.data)
     }
     function decideColorForStatus(text) {
-        return text === "Rejected" ? "#f44336" : "#76FF03";
+        return text === "Rejected" ? "#f44336" : "#4CAF50";
     }
     return (
         <div className="applied-schollarship">
@@ -405,11 +400,11 @@ const MyAppliedScholarships = ({ email }) => {
                         </div>
                     </li>
                     : (scholarships).map((scholarship, i) =>
-                        <li style={{ background: decideBackground(i) }} key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                        <li  key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
-                                <h3>{scholarship.schollarship_name}</h3>
-                                <h4 style={{ color: decideColorForStatus(scholarship.status) }}>{scholarship.status}</h4>
-                                <Popup trigger={<Button variant="contained" color="primary">Cancel</Button>} modal >
+                                <h4>{scholarship.schollarship_name}</h4>
+                                <h5 style={{ color: decideColorForStatus(scholarship.status) }}>{scholarship.status}</h5>
+                                <Popup trigger={<Button variant="contained" color="primary" style={{ marginRight: "5px", background: "#f44336" }}>Cancel</Button>} modal >
                                     <AreYouSureWarning scholarship={scholarship} />
                                 </Popup>
 
@@ -443,12 +438,11 @@ const MyRejectedScholarships = ({ email }) => {
                         </div>
                     </li>
                     : (scholarships).map((scholarship, i) =>
-                        <li style={{ background: decideBackground(i) }} key={`${scholarship.schollarship_name}${scholarship.name}`}>
+                        <li key={`${scholarship.schollarship_name}${scholarship.name}`}>
                             <div className="schlp-item">
-                                <h3>{scholarship.schollarship_name}</h3>
-                                {console.log(scholarship.status)}
+                                <h4>{scholarship.schollarship_name}</h4>
                                 <Popup trigger={<Button variant="contained" color="primary">View Reason</Button>} modal >
-                                    <ViewInfo msg={"If you've applied for scholarships before, you'll understand how lengthy some scholarships forms can be. From details of all your family members to every last thing you did in school, some applications request enough information for you to write an autobiography. Tedious as it may be, you have to make sure you provide all the info they want, and if for some reason you can't, be sure you include a short explanation why."} />
+                                   {close => <ViewInfo close ={close} msg={"If you've applied for scholarships before, you'll understand how lengthy some scholarships forms can be. From details of all your family members to every last thing you did in school, some applications request enough information for you to write an autobiography. Tedious as it may be, you have to make sure you provide all the info they want, and if for some reason you can't, be sure you include a short explanation why."} /> } 
                                 </Popup>
 
                             </div>

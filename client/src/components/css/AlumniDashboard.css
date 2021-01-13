@@ -12,14 +12,15 @@
     display: flex;
     float: right;
     list-style: none;
+    height: 100%;
   }
   
   .alumni-dash-nav ul li {
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
+    height: 100%;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 1rem;
     color: #FFFFFF;
-    border: 1px solid #FFFFFF;
   }
   
   .alumni-dash-nav ul li:hover {
@@ -31,7 +32,7 @@
   .alumni-dash-side-nav {
     grid-area: side-nav;
     border-right: 1px solid #dddddd;
-    height: 100vh;
+    height: calc(100vh - 50px);
   }
   
   .alumni-dash-side-nav ul {
@@ -57,9 +58,18 @@
   }
   .list-schollarship {
     grid-area: schollarship;
+    
+  }
+  .list-schollarship ul{
+    overflow-y: scroll;
+    height: calc(100vh - 50px);
+    
   }
   
-  .list-schollarship ul li {}
+  .list-schollarship ul li {
+    margin: 5px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  }
   
   .schlp-item {
     display: flex;

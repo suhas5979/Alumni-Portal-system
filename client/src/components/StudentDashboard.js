@@ -11,14 +11,14 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import './css/StudentDashboard.css';
 const StudentDashboard = (props) => {
-    document.title ="Alumni Portal | Student Dashboard"
+    document.title = "Alumni Portal | Student Dashboard"
     useEffect(() => {
         if (sessionStorage.getItem("email") === null) {
             props.history.push("/student_login");
-        }   
+        }
     }, [])
 
-    
+
     return (
         <div className="student-dashboard-container">
             <Switch>
@@ -43,7 +43,7 @@ const StudentDashboard = (props) => {
 }
 const Nav = () => {
     return (
-        <div className="student-dash-nav" style={{borderBottom:"1px solid #000000"}}>
+        <div className="student-dash-nav" style={{ borderBottom: "1px solid #000000" }}>
             <ul >
                 <Link to="/student/home"><li>Home</li></Link>
 
@@ -87,7 +87,7 @@ const Home = () => {
                 </ul>
             </div>
             <div className="student-home-content">
-                <h2 style={{textAlign:"center"}} > Home</h2>
+                <h2 style={{ textAlign: "center" }} > Home</h2>
             </div>
         </div>
     )
@@ -105,7 +105,7 @@ const AlumniCard = ({ alumni }) => {
 
                 </div>
                 <Popup trigger={<IconButton style={{ color: "#03A9F4" }} ><MessageIcon /></IconButton>} modal >
-                    <SendMessage name={alumni.name} />
+                    <SendMessage alumniEmail={alumni.email} name={alumni.name} />
                 </Popup>
 
                 <IconButton style={{ color: "#03A9F4" }} ><PersonAddIcon /></IconButton>
@@ -114,28 +114,46 @@ const AlumniCard = ({ alumni }) => {
     )
 }
 
-const SendMessage = ({ name }) => {
+const SendMessage = ({ name, alumniEmail}) => {
     const [messages, setMessages] = useState([])
     const [text, setText] = useState("");
+    const email = sessionStorage.getItem("email");
+    async function getAllMessages() {
+        const res = await axios.get(`/api/message/${email}`);
+        const fetchedMessages = res.data.filter(e=>e.to===alumniEmail)
+        setMessages(fetchedMessages)
+        console.log(res.data)
+    }
+    
+    useEffect(() => {
+        getAllMessages()
+    }, [])
     function sendMessage() {
         if (text !== "") {
-            setMessages([...messages, text]);
+            sendMessageToDatabase(text)
             setText("")
+            getAllMessages()
         } else {
 
         }
     }
+    async function sendMessageToDatabase(text) {
+        const res = await axios.post(`/api/message`, { to: alumniEmail, from: email, message: text });
+        console.log(res.data)
+    }
     console.log(messages);
     return (
         <div style={{ height: "300px", display: "flex", flexDirection: "column" }}>
-            <h3 style={{ textAlign: "center", borderBottom:"1px solid #dddddd"}}>{name}</h3>
-            <div style={{ display: "flex", flex: "1", flexDirection: "column" }} >
+            <h3 style={{ textAlign: "center", borderBottom: "1px solid #dddddd" }}>{name}</h3>
+            <div style={{ overflowY:"scroll", display: "flex", flex: "1", flexDirection: "column" }} >
                 <div style={{ flex: "1" }} >
-                    <ul style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }} >
-                        {messages.map(message =>
+                    {console.log(messages)}
+                    <ul style={{ overflowY:"scroll", display: "flex", flexDirection: "column", alignItems: "flex-end" }} >
+                        {
+                        messages.map(message =>
 
                             <span key={message} style={{ margin: "5px", background: "#29B6F6", padding: "2px 6px", borderRadius: "12px", color: "#FFFFFF" }}>
-                                {message}
+                                {message.message}
                             </span>
 
 
@@ -150,10 +168,10 @@ const SendMessage = ({ name }) => {
         </div>
     )
 }
-const About =() =>{
-    return(
+const About = () => {
+    return (
         <div>
-            
+
         </div>
     )
 }

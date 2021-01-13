@@ -5,6 +5,7 @@ require('./model/Student');
 require('./model/Alumni');
 require('./model/Schollarship');
 require('./model/Feedback');
+require('./model/Message');
 // configuration
 const { MONGO_URI } = require('./config/keys');
 // routes  
@@ -13,6 +14,7 @@ const studentRoutes = require('./routes/studentRoutes')
 const schollarshipRoutes = require('./routes/schollarshipRoutes');
 const alumniRoutes = require('./routes/alumniRoutes');
 const feedbackRoutes = require('./routes/feedbackRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 
 // mongo setup
 mongoose.connect(MONGO_URI, {
@@ -32,6 +34,7 @@ app.use(studentRoutes)
 app.use(schollarshipRoutes)
 app.use(alumniRoutes)
 app.use(feedbackRoutes)
+app.use(messageRoutes)
 // server host config
 const PORT = process.env.PORT || 5000;
 
