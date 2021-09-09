@@ -1,0 +1,13 @@
+.footer-text {
+  text-align: center;
+  color: #03A9F4 !important;
+}
+
+.dark-mode {
+  color: white !important;
+}
+
+.footer-div {
+  margin-top: 2rem;
+  padding-bottom: 10px;
+}

@@ -1,81 +1,88 @@
 .scroll {
-    margin: 2px 0;
-  }
-  
-  .home-content {
-    display: grid;
-    grid-template-areas: "slideshow login";
-    height: calc(100vh - var(--nav-size));
-  }
-  .slide-show{
-      grid-area:slideshow;
-      display: flex;
-      max-width: 60vw ;
-      padding: 10px;
-      align-items: center;
-      justify-content: center;
-  }
-  .nav {
-    height: var(--nav-size);
-    background: var(--color-primary);
-    display: flex;
-    font-family: 'Rubik', sans-serif;
-  }
-  
-  .login-container {
-    grid-area: login;
-    border-left: 2px solid #dddddd;
-  }
-  
-  .login-container ul {
-    list-style: none;
-  }
-  
-  .login-container ul li {
-    padding: 1rem;
-  }
-  
-  .login-container ul li:hover {
-    background: var(--color-primary);
-    color: #FFFFFF;
-    cursor: pointer;
-  }
-  
-  .notice-container {
-    grid-area: notices;
-    height: 40vh;
-  }
-  
-  .notices-container {
-    height: 40vh;
-  }
-  
-  .nav-logo {
-    height: 90%;
-  }
-  
-  .moto {
-    display: flex;
-    flex-direction: column;
-    padding: 15px 5px;
-    font-weight: 800;
-  }
-  
-  .title {
-    font-family: 'Lobster Two', cursive;
-    color: #FFFFFF;
-    font-size: 3rem;
-    padding: 5px 15px;
-  }
-  
-  .spacer {
-    flex: 1;
-  }
-  
-  .notice-li {
-    list-style: none;
-    margin: 1rem;
-  }
-  
-  .alumni-dashboard-container {}
-  
+  margin: 2px 0;
+}
+.home-container {
+  background-image: url("../../assets/background.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.home-content {
+  display: grid;
+  grid-template-areas: "slideshow login";
+  height: calc(100vh - var(--nav-size));
+}
+.slide-show {
+  grid-area: slideshow;
+  display: flex;
+  max-width: 60vw;
+  padding: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.nav {
+  height: var(--nav-size);
+  background: var(--color-primary);
+  display: flex;
+  font-family: "Rubik", sans-serif;
+}
+
+.login-container {
+  grid-area: login;
+  border-left: 2px solid #dddddd;
+}
+
+.login-container ul {
+  list-style: none;
+}
+
+.login-container ul li {
+  padding: 1rem;
+}
+
+.login-container ul li:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.notice-container {
+  grid-area: notices;
+  height: 40vh;
+}
+
+.notices-container {
+  height: 40vh;
+}
+
+.nav-logo {
+  height: 90%;
+}
+
+.moto {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 5px;
+  font-weight: 800;
+}
+
+.title {
+  font-family: "Lobster Two", cursive;
+  color: #ffffff;
+  font-size: 3rem;
+  padding: 5px 15px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.notice-li {
+  list-style: none;
+  margin: 1rem;
+}
+
+.alumni-dashboard-container {
+}
